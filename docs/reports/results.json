@@ -1,0 +1,22 @@
+{
+  "gametest-results-vanilla.xml": {
+    "passed": 36,
+    "failed": 0
+  },
+  "gametest-results-cobblemon.xml": {
+    "passed": 43,
+    "failed": 0
+  },
+  "flan-results-shirokai-cobblemon.xml": {
+    "passed": 14,
+    "failed": 0
+  },
+  "version": "0.2.0-alpha.1",
+  "junit": {
+    "passed": 36,
+    "failed": 0
+  },
+  "nativeClient": "PASS; client-result.txt and visual-server-summary.txt",
+  "load": "PASS; load-server-summary.txt and ../load-profile.json",
+  "jarSHA256": "59f279200d74b254c9aa2cea74801f6a5cfee3f042d2543d027ba7992ac5d476"
+}

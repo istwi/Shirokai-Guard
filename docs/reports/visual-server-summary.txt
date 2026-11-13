@@ -1,0 +1,4 @@
+Extracted from the corresponding local Gradle/server run:
+[16:00:09] [Server thread/INFO] (ShirokaiGuard) Visual client admin permission: true
+[16:00:25] [Server thread/INFO] (Minecraft) All 1 required tests passed :)
+BUILD SUCCESSFUL in 2m 40s

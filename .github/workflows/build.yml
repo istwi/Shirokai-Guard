@@ -1,0 +1,58 @@
+name: Validate Shirokai Guard
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - variant: vanilla
+            args: ''
+          - variant: cobblemon
+            args: '-PwithCobblemon'
+          - variant: load
+            args: '-PloadTest'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: gradle/actions/setup-gradle@v4
+      - run: ./gradlew --no-daemon test runGametest build ${{ matrix.args }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: shirokai-guard-${{ matrix.variant }}
+          path: |
+            build/libs/shirokai-guard-*.jar
+            build/reports/tests/
+            build/gametest-results-*.xml
+            build/load-profile.json
+            build/gametest/logs/latest.log
+  flan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: gradle/actions/setup-gradle@v4
+      - run: ./gradlew assemble
+      - run: ./gradlew runGametest
+        working-directory: validation/flan
+      - run: ./gradlew -PwithCobblemon runGametest
+        working-directory: validation/flan
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: flan-validation
+          path: |
+            validation/flan/build/flan-results*.xml
+            validation/flan/build/gametest/logs/latest.log

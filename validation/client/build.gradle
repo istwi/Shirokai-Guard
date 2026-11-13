@@ -1,0 +1,20 @@
+plugins { id 'fabric-loom' version '1.9.2' }
+version='1.0.0'
+repositories { mavenCentral() }
+dependencies {
+ minecraft 'com.mojang:minecraft:1.21.1'
+ mappings 'net.fabricmc:yarn:1.21.1+build.3:v2'
+ modImplementation 'net.fabricmc:fabric-loader:0.17.2'
+ modImplementation 'net.fabricmc.fabric-api:fabric-api:0.116.18+1.21.1'
+}
+java { toolchain.languageVersion=JavaLanguageVersion.of(21) }
+loom {
+ runs {
+  client {
+   client()
+   programArgs '--username', 'GuardVisual', '--width', '1280', '--height', '720'
+   runDir 'build/client'
+   vmArg '-Dguard.visual.test=true'
+  }
+ }
+}

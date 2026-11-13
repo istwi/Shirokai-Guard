@@ -1,0 +1,1 @@
+PASS: real Minecraft client; admin, regions, flags, template preview/confirmation, settings persistence, navigation, native icon throw rejection; five screenshots saved

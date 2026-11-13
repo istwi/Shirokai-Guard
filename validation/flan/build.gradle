@@ -1,0 +1,89 @@
+plugins {
+    id 'fabric-loom' version '1.14.10'
+    id 'org.jetbrains.kotlin.jvm' version '2.3.20'
+}
+version = '1.0.0'
+repositories {
+    mavenCentral()
+    maven { url = 'https://api.modrinth.com/maven'; content { includeGroup 'maven.modrinth' } }
+}
+configurations { flanArtifact }
+dependencies { flanArtifact 'maven.modrinth:flan:1.21.1-1.12.8-fabric' }
+def flanArchive = configurations.flanArtifact.singleFile
+def guardJar = file('../../build/libs/shirokai-guard-0.2.0-alpha.1.jar')
+if (!guardJar.exists()) throw new GradleException('Build the Guard JAR first: ../../gradlew build')
+dependencies {
+    minecraft 'com.mojang:minecraft:1.21.1'
+    mappings 'net.fabricmc:yarn:1.21.1+build.3:v2'
+    modImplementation 'net.fabricmc:fabric-loader:0.17.2'
+    modImplementation 'net.fabricmc.fabric-api:fabric-api:0.116.18+1.21.1'
+    modImplementation('me.lucko:fabric-permissions-api:0.3.1') { transitive = false }
+    modImplementation files(guardJar, flanArchive)
+    modImplementation files(zipTree(flanArchive).matching { include 'META-INF/jars/lingua_bib-*.jar' })
+    runtimeOnly files(zipTree(flanArchive).matching { include 'META-INF/jars/snakeyaml-*.jar' })
+}
+java { toolchain.languageVersion = JavaLanguageVersion.of(21) }
+sourceSets.main.java {
+    srcDir '../../src/gametest/java'
+    include '**/TestPlayers.java', '**/FlanGameTests.java', '**/CombinedGameTests.java'
+}
+loom {
+    runs {
+        gametest {
+            server()
+            vmArg '-Dfabric-api.gametest'
+            ['http.proxyHost', 'http.proxyPort', 'https.proxyHost', 'https.proxyPort', 'javax.net.ssl.trustStore'].each { key ->
+                if (System.getProperty(key)) vmArg '-D' + key + '=' + System.getProperty(key)
+            }
+            vmArg "-Dfabric-api.gametest.report-file=${layout.buildDirectory.get()}/flan-results${providers.gradleProperty('withShirokai').isPresent() ? '-shirokai' : ''}${providers.gradleProperty('withCobblemon').isPresent() ? '-cobblemon' : ''}.xml"
+            runDir 'build/gametest'
+        }
+    }
+}
+tasks.named('runGametest') {
+    doFirst {
+        delete layout.buildDirectory.dir('gametest')
+        def directory = layout.buildDirectory.dir('gametest').get().asFile
+        directory.mkdirs()
+        new File(directory, 'server.properties').text = 'online-mode=false\nspawn-protection=0\npvp=true\n'
+        if (providers.gradleProperty('withShirokai').isPresent()) {
+            copy { from fileTree(providers.gradleProperty('integrationMods').getOrElse('/workspace/guard-test-mods/integrations')) { include '*.jar' }; into new File(directory, 'mods') }
+        }
+    }
+    ['http.proxyHost', 'http.proxyPort', 'https.proxyHost', 'https.proxyPort', 'javax.net.ssl.trustStore'].each { key ->
+        if (System.getProperty(key)) systemProperty key, System.getProperty(key)
+    }
+}
+
+if (providers.gradleProperty('withCobblemon').isPresent()) {
+    repositories { maven { url = 'https://maven.impactdev.net/repository/development'; content { includeGroup 'com.cobblemon' } } }
+    configurations { cobblemonIcu }
+    dependencies {
+        modRuntimeOnly 'com.cobblemon:fabric:1.8.3+1.21.1'
+        cobblemonIcu 'com.ibm.icu:icu4j:71.1'
+    }
+    tasks.register('prepareCobblemonRuntime', Sync) {
+        from configurations.cobblemonIcu
+        into layout.buildDirectory.dir('cobblemon-runtime')
+    }
+    tasks.named('runGametest') {
+        dependsOn tasks.named('prepareCobblemonRuntime')
+        classpath files(layout.buildDirectory.file('cobblemon-runtime/icu4j-71.1.jar'))
+    }
+}
+
+if (providers.gradleProperty('withShirokai').isPresent()) {
+    if (!providers.gradleProperty('withCobblemon').isPresent()) throw new GradleException('withShirokai requires -PwithCobblemon')
+    def mods = fileTree(providers.gradleProperty('integrationMods').getOrElse('/workspace/guard-test-mods/integrations')) { include '*.jar' }
+    if (mods.files.size() != 6) throw new GradleException('Expected the six verified integration JARs; see README')
+    dependencies {
+        modCompileOnly mods
+        compileOnly 'net.luckperms:api:5.4'
+    }
+} else {
+    sourceSets.main.java.exclude '**/CombinedGameTests.java'
+}
+processResources {
+    inputs.property 'withShirokai', providers.gradleProperty('withShirokai').isPresent()
+    filesMatching('fabric.mod.json') { expand combinedTests: (providers.gradleProperty('withShirokai').isPresent() ? ',"dev.shirokai.guard.CombinedGameTests"' : '') }
+}

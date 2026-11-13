@@ -1,0 +1,11 @@
+.gradle/
+build/
+run/
+*.log
+.idea/
+
+validation/flan/.gradle/
+validation/flan/build/
+
+validation/client/.gradle/
+validation/client/build/

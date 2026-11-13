@@ -1,0 +1,5 @@
+settingsEvaluated { settings ->
+    settings.pluginManagement.resolutionStrategy.eachPlugin {
+        if (requested.id.id == 'fabric-loom' && requested.version == '1.8.13') useVersion('1.9.2')
+    }
+}

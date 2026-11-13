@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "shirokai_guard",
+  "version": "${version}",
+  "name": "Shirokai Guard",
+  "description": "Server-side region protection, administrative menus and templates. Experimental alpha.",
+  "environment": "server",
+  "entrypoints": {
+    "main": [
+      "dev.shirokai.guard.ShiroGuard"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.17.2",
+    "minecraft": "~1.21.1",
+    "java": ">=21",
+    "fabric-api": "*",
+    "fabric-permissions-api-v0": "*"
+  },
+  "mixins": [
+    "shirokai-guard.mixins.json"
+  ]
+}

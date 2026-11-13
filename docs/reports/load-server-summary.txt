@@ -1,0 +1,4 @@
+Extracted from the corresponding local Gradle/server run:
+[16:01:52] [Server thread/INFO] (ShirokaiGuard) Load profile: {"players":100,"connections":"embedded; no remote clients or network latency","warmupTicks":40,"measuredTicks":200,"guardDecisions":80000,"setupMillis":1660.601162,"meanTickMillis":2.958024735,"p95TickMillis":5.682385,"maxTickMillis":118.066763,"cache":"Metrics[queries=82600, hits=82409, cacheEntries=191, indexedChunks=2, largeRegions=0]"}
+[16:01:52] [Server thread/INFO] (Minecraft) All 1 required tests passed :)
+BUILD SUCCESSFUL in 1m 16s

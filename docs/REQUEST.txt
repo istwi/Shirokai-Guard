@@ -1,0 +1,176 @@
+CODEX — DESENVOLVIMENTO COMPLETO DO SHIROKAI GUARD
+
+1. INFORMAÇÕES DO PROJETO
+Nome: Shirokai Guard
+Repositório: https://github.com/istwi/Shirokai-Guard
+Plataforma: Minecraft Java 1.21.1, Fabric, Java 21, Cobblemon 1.8.3.
+Mod exclusivamente server-side, compatível com LuckPerms e dimensões personalizadas.
+
+2. OBJETIVO PRINCIPAL
+Desenvolver um mod próprio de proteção de regiões inspirado nas funcionalidades do WorldGuard, sem copiar seu código, sem depender de Bukkit, Spigot, Paper ou WorldEdit.
+O Shirokai Guard deve funcionar independentemente de outros mods Shirokai.
+
+ESTRATÉGIA OBRIGATÓRIA
+FASE 1: Núcleo independente e completo: regiões, flags, permissões, proteção vanilla, comandos, persistência e testes.
+FASE 2: Proteção Cobblemon, coexistência com Flan e integrações opcionais somente quando necessárias.
+FASE 3: Menus administrativos, templates, visualização de regiões, desempenho e ferramentas avançadas.
+Não avançar sem validar as funções fundamentais da fase anterior.
+
+FASE 1 — SISTEMA PRINCIPAL
+
+3. SELEÇÃO DE REGIÕES
+Comandos:
+/sg wand
+/sg pos1
+/sg pos2
+/sg sel clear
+/sg expand <quantidade> <direção>
+/sg contract <quantidade> <direção>
+/sg expand vert
+
+- Machado de madeira: clique esquerdo define pos1; direito define pos2.
+- Seleção por coordenadas e dimensão, expansão vertical, partículas para visualizar limites.
+- Validar seleções e não exigir WorldEdit.
+
+4. GERENCIAMENTO DE REGIÕES
+/sg define <região>
+/sg redefine <região>
+/sg remove <região>
+/sg info <região>
+/sg list
+/sg select <região>
+/sg setpriority <região> <prioridade>
+/sg setparent <região> <região_pai>
+/sg addowner <região> <jogador>
+/sg removeowner <região> <jogador>
+/sg addmember <região> <jogador>
+/sg removemember <região> <jogador>
+
+Implementar regiões cuboides, regiões globais por mundo, sobreposição, prioridades, owners/members por UUID, herança sem ciclos, dimensões personalizadas e persistência. Definir resolução determinística de conflitos e precedência segura de deny quando aplicável.
+
+5. SISTEMA DE FLAGS
+Estados: allow, deny, unset. Suportar texto, números e listas nas flags adequadas.
+
+Construção/interação:
+build, block-break, block-place, interact, use, chest-access, item-frame, armor-stand, piston, hopper, farmland-trample.
+Combate/entidades:
+pvp, mob-damage, mob-spawning, entity-damage, entity-interact, entity-spawning, projectile, tnt, creeper-explosion, other-explosion.
+Ambiente:
+fire-spread, lava-flow, water-flow, leaf-decay, ice-form, ice-melt, snow-melt, crop-growth.
+Jogadores:
+entry, exit, greeting, farewell, invincible, fall-damage, hunger, item-drop, item-pickup, enderpearl, chorus-fruit, teleport.
+Comandos:
+blocked-commands, allowed-commands.
+Grupos: todos, owners, members e não membros.
+
+/sg flag <região> <flag> <valor>
+/sg flag <região> <flag> unset
+/sg flags <região>
+
+Não apresentar flags sem implementação real como disponíveis.
+
+6. LUCKPERMS
+Usar Fabric Permissions API.
+shirokaiguard.admin
+shirokaiguard.region.create
+shirokaiguard.region.delete
+shirokaiguard.region.flag
+shirokaiguard.region.member
+shirokaiguard.region.info
+shirokaiguard.bypass
+
+Respeitar negativas explícitas; bypass administrativo auditável, nunca concedido automaticamente a outro mod.
+
+7. PROTEÇÃO CONTRA EXPLOITS
+Validar ações no servidor, não somente cliques. Cobrir quebra/colocação, explosões, pistões cruzando limites, hoppers, água/lava, fogo, entidades, projéteis e teleportes. Testar mecanismos indiretos e impedir alterações indevidas em regiões protegidas.
+
+FASE 2 — COBBLEMON E INTEGRAÇÕES
+
+8. COBBLEMON
+Flags propostas:
+pokemon-spawn, pokemon-capture, pokemon-battle, pokemon-interact, pokemon-damage, pokemon-pasture, pokemon-breeding.
+Verificar APIs reais do Cobblemon 1.8.3 antes de implementar. Proteger captura, batalhas, interações, spawns e Pasture Blocks conforme APIs disponíveis. Documentar limitações e não inventar eventos.
+
+9. FLAN
+Coexistir sem alterar claims, dados ou configurações do Flan. Uma permissão do Guard não deve anular proibição independente do Flan. Priorizar regiões administrativas e áreas especiais.
+
+10. INTEGRAÇÕES SHIROKAI OPCIONAIS
+Inspecionar README, documentação, código, eventos, Mixins e APIs antes de integrar.
+
+Shirokai Essentials: https://github.com/istwi/Shirokai-Essentials
+- Homes, warps, TPA, RTP, /back, teleportes administrativos.
+- Validar entrada/saída e impedir teleportes não autorizados para entry deny.
+- Sem bypass geral.
+
+Shirokai Spawn: https://github.com/istwi/Shirokai-Spawn
+- Teleporte inicial, /explorar, dimensões personalizadas.
+- Exceções oficiais somente explícitas, restritas e autorizadas.
+- Não ignorar automaticamente entry deny.
+
+Shirokai Raids: https://github.com/istwi/Shirokai-Raids
+- Arenas, boss principal, batalhas autorizadas, captura individual após vitória, entrada/saída.
+- Não interferir em HP, dano, recompensas, prazos ou lógica de batalha.
+
+Shirokai Crates: https://github.com/istwi/Shirokai-Crates
+- Proteger blocos registrados, permitir abertura com chave e prévia autorizada, bloquear destruição por explosões e pistões.
+- Exceções específicas para a caixa, sem liberar outras interações.
+
+REGRA FUNDAMENTAL: verificar primeiro se os eventos vanilla/Cobblemon já bastam. Criar adaptadores apenas diante de necessidade comprovada. Integrações opcionais: Guard inicia e protege regiões sem qualquer desses mods instalado.
+
+FASE 3 — INTERFACE E FERRAMENTAS
+
+11. MENU ADMINISTRATIVO
+/sg menu
+GUI server-side Fabric com estilo Shirokai azul/ciano, títulos ✦, ícones claros, lore curto, navegação por páginas. Menus de regiões, flags, owners/members, prioridades e configurações. Botão minecraft:arrow, nome VOLTAR AO MENU, comando /menu. Respeitar permissões.
+
+12. TEMPLATES
+Templates reutilizáveis: spawn, arena, evento, loja, ginásio. Não sobrescrever configurações personalizadas sem confirmação.
+
+13. CONFIGURAÇÕES
+config/shirokai-guard/
+  config.json
+  flags.json
+  messages.json
+  permissions.json
+  integrations.json
+  menus.json
+  templates/
+  regions/
+
+Validar JSON, salvar atomicamente, manter backups e dados antigos, suportar dimensões personalizadas.
+
+14. COMANDOS ADMINISTRATIVOS
+/sg reload
+/sg save
+/sg status
+/sg debug
+/sg bypass
+/sg help
+Mensagens configuráveis, permissões, logs e diagnósticos sem spam.
+
+15. DESEMPENHO
+Projetar para até 100 jogadores simultâneos: índice espacial por dimensão/chunk, cache com invalidação, sem varreduras globais por tick, sem forçar carregamento de chunks, sem I/O de disco em eventos críticos e sem alterações de mundo fora da thread principal. Medir antes de afirmar capacidade.
+
+16. TESTES
+Cobrir criação/remoção, sobreposição, prioridades, herança, owners/members, flags, blocos, explosões, pistões, teleportes, permissões, persistência, dimensões, Cobblemon, Flan e inicialização sem mods opcionais. Adicionar testes específicos por integração. Compilação não substitui teste real.
+
+17. GITHUB E RELEASES
+Trabalhar em https://github.com/istwi/Shirokai-Guard.
+Configurar Gradle/Fabric Loom, Java 21, GitHub Actions, testes, JAR instalável (não sources.jar), changelog, documentação e releases versionadas após validação. Não declarar estável com falhas críticas ou testes essenciais pendentes.
+
+18. ORDEM DE EXECUÇÃO
+1. Criar projeto Fabric e arquitetura.
+2. Implementar regiões e seleção.
+3. Implementar flags, prioridades e permissões.
+4. Implementar proteção vanilla.
+5. Implementar persistência e testes.
+6. Implementar proteção Cobblemon.
+7. Validar compatibilidade com Flan.
+8. Avaliar Essentials, Spawn, Raids e Crates e integrar apenas se necessário.
+9. Implementar menus, templates e ferramentas.
+10. Executar testes finais, compilar e preparar release.
+
+Ao concluir cada etapa, informar funcionalidades, arquivos alterados, testes executados, problemas, pendências e próximo passo. Não pular etapas nem declarar funções incompletas como concluídas.
+
+RESULTADO ESPERADO
+Shirokai Guard independente, seguro, otimizado, server-side e inspirado no WorldGuard, com proteção de regiões Minecraft/Cobblemon, coexistência com Flan e compatibilidade opcional com Essentials, Spawn, Raids e Crates. Prioridades: segurança, estabilidade e preservação dos dados.

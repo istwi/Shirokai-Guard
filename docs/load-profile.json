@@ -1,0 +1,12 @@
+{
+  "players": 100,
+  "connections": "embedded; no remote clients or network latency",
+  "warmupTicks": 40,
+  "measuredTicks": 200,
+  "guardDecisions": 80000,
+  "setupMillis": 1660.601162,
+  "meanTickMillis": 2.958024735,
+  "p95TickMillis": 5.682385,
+  "maxTickMillis": 118.066763,
+  "cache": "Metrics[queries\u003d82600, hits\u003d82409, cacheEntries\u003d191, indexedChunks\u003d2, largeRegions\u003d0]"
+}

@@ -1,0 +1,84 @@
+plugins { id 'fabric-loom' version '1.9.2'; id 'org.jetbrains.kotlin.jvm' version '2.2.20' }
+version = '0.2.0-alpha.1'
+group = 'dev.shirokaiguard'
+base { archivesName = 'shirokai-guard' }
+repositories { mavenCentral(); maven { url = 'https://maven.impactdev.net/repository/development'; content { includeGroup 'com.cobblemon' } } }
+dependencies {
+    minecraft 'com.mojang:minecraft:1.21.1'
+    mappings 'net.fabricmc:yarn:1.21.1+build.3:v2'
+    modImplementation 'net.fabricmc:fabric-loader:0.17.2'
+    modImplementation 'net.fabricmc.fabric-api:fabric-api:0.116.18+1.21.1'
+    modImplementation('me.lucko:fabric-permissions-api:0.3.1') { transitive = false }
+    include('me.lucko:fabric-permissions-api:0.3.1') { transitive = false }
+    modCompileOnly('com.cobblemon:fabric:1.8.3+1.21.1') { transitive = false }
+    compileOnly 'org.jetbrains.kotlin:kotlin-stdlib:2.2.20'
+    if (providers.gradleProperty('withCobblemon').isPresent()) {
+        modRuntimeOnly 'com.cobblemon:fabric:1.8.3+1.21.1'
+        runtimeOnly 'com.ibm.icu:icu4j:71.1'
+    }
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.11.4'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+java { toolchain.languageVersion = JavaLanguageVersion.of(21); withSourcesJar() }
+tasks.withType(JavaCompile).configureEach { options.release = 21 }
+test { useJUnitPlatform() }
+processResources { inputs.property 'version', project.version; filesMatching('fabric.mod.json') { expand version: project.version } }
+sourceSets { gametest { compileClasspath += sourceSets.main.compileClasspath; runtimeClasspath += sourceSets.main.runtimeClasspath } }
+dependencies { gametestImplementation sourceSets.main.output }
+loom {
+    mods {
+        shirokai_guard { sourceSet sourceSets.main }
+        shirokai_guard_tests { sourceSet sourceSets.gametest }
+    }
+    runs {
+        gametest {
+            server()
+            name 'Shirokai Guard GameTests'
+            source sourceSets.gametest
+            vmArg '-Dfabric-api.gametest'
+            vmArg "-Dfabric-api.gametest.report-file=${project.layout.buildDirectory.get()}/gametest-results${providers.gradleProperty('visualTest').isPresent() ? '-visual' : providers.gradleProperty('loadTest').isPresent() ? '-load' : providers.gradleProperty('withCobblemon').isPresent() ? '-cobblemon' : '-vanilla'}.xml"
+            runDir 'build/gametest'
+        }
+    }
+}
+tasks.named('runGametest') {
+    doFirst {
+        delete layout.buildDirectory.dir('gametest')
+        def directory = layout.buildDirectory.dir('gametest').get().asFile
+        directory.mkdirs()
+        new File(directory, 'server.properties').text = 'online-mode=false\nspawn-protection=0\npvp=true\n'
+    }
+    ['http.proxyHost', 'http.proxyPort', 'https.proxyHost', 'https.proxyPort', 'javax.net.ssl.trustStore'].each { key ->
+        if (System.getProperty(key)) systemProperty key, System.getProperty(key)
+    }
+}
+
+processGametestResources {
+    inputs.property 'withCobblemon', providers.gradleProperty('withCobblemon').isPresent()
+    inputs.property 'loadTest', providers.gradleProperty('loadTest').isPresent()
+    inputs.property 'visualTest', providers.gradleProperty('visualTest').isPresent()
+    def tests = providers.gradleProperty('visualTest').isPresent() ? ['VisualServerGameTests'] : providers.gradleProperty('loadTest').isPresent() ? ['LoadGameTests'] : ['GuardGameTests', 'PhaseThreeGameTests']
+    if (providers.gradleProperty('withCobblemon').isPresent() && !providers.gradleProperty('loadTest').isPresent() && !providers.gradleProperty('visualTest').isPresent()) tests.add('CobblemonGameTests')
+    filesMatching('fabric.mod.json') { expand testEntrypoints: tests.collect { '"dev.shirokai.guard.' + it + '"' }.join(',') }
+}
+tasks.named('sourcesJar', Jar) { exclude 'fabric.mod.json', 'shirokai-guard.mixins.json' }
+tasks.withType(AbstractArchiveTask).configureEach { preserveFileTimestamps = false; reproducibleFileOrder = true }
+tasks.register('projectArchive', Zip) {
+    archiveFileName = "shirokai-guard-${project.version}-project.zip"
+    destinationDirectory = layout.buildDirectory.dir('distributions')
+    from(projectDir) { exclude '.git/**', '**/.gradle/**', '**/build/**', 'run/**', '.idea/**', '*.log' }
+}
+// Loom filters Minecraft's client-only ICU artifact from server launches, but Cobblemon's
+// bundled Graal engine needs it. Add an unchanged copy specifically to the test JVM.
+if (providers.gradleProperty('withCobblemon').isPresent()) {
+    configurations { cobblemonIcu }
+    dependencies { cobblemonIcu 'com.ibm.icu:icu4j:71.1' }
+    tasks.register('prepareCobblemonRuntime', Sync) {
+        from configurations.cobblemonIcu
+        into layout.buildDirectory.dir('cobblemon-runtime')
+    }
+    tasks.named('runGametest') {
+        dependsOn tasks.named('prepareCobblemonRuntime')
+        classpath files(layout.buildDirectory.file('cobblemon-runtime/icu4j-71.1.jar'))
+    }
+}

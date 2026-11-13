@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="dev.shirokai.guard.core.PhaseThreeTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-11-13T15:56:56" hostname="5d0ae9030bba" time="0.653">
+  <properties/>
+  <testcase name="customTemplateIsNotOverwrittenAndBackupIsRetained()" classname="dev.shirokai.guard.core.PhaseThreeTest" time="0.406"/>
+  <testcase name="hugeSelectionsHaveBoundedNearbySamples()" classname="dev.shirokai.guard.core.PhaseThreeTest" time="0.065"/>
+  <testcase name="malformedTemplateDoesNotDestroyOriginalFile()" classname="dev.shirokai.guard.core.PhaseThreeTest" time="0.038"/>
+  <testcase name="cachedSpatialQueriesDoNotCacheAnActorsPermission()" classname="dev.shirokai.guard.core.PhaseThreeTest" time="0.049"/>
+  <testcase name="cacheIsBoundedAndCanBeDisabled()" classname="dev.shirokai.guard.core.PhaseThreeTest" time="0.016"/>
+  <testcase name="templatePathTraversalRejected()" classname="dev.shirokai.guard.core.PhaseThreeTest" time="0.003"/>
+  <testcase name="optionalFlagsAreNotAppliedWithoutCobblemon()" classname="dev.shirokai.guard.core.PhaseThreeTest" time="0.01"/>
+  <testcase name="templatePreservesIdentityMembersGeometryAndUnlistedFlags()" classname="dev.shirokai.guard.core.PhaseThreeTest" time="0.015"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
