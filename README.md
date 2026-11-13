@@ -4,6 +4,8 @@ Mod **server-side** de proteção de regiões para **Minecraft Java 1.21.1 / Fab
 
 **Estado: 0.2.0-alpha.1.** Proteções, menus administrativos, templates opcionais, visualização e configuração implementados. O conjunto com Flan, Cobblemon, LuckPerms e os módulos Shirokai passou nos cenários de integração documentados. Versão experimental; veja os resultados e limites em [VALIDATION.md](docs/VALIDATION.md).
 
+[Baixar JAR 0.2.0-alpha.1](https://github.com/istwi/Shirokai-Guard/raw/refs/tags/v0.2.0-alpha.1/releases/v0.2.0-alpha.1/shirokai-guard-0.2.0-alpha.1.jar) · [Pré-release](https://github.com/istwi/Shirokai-Guard/releases/tag/v0.2.0-alpha.1)
+
 ## Instalação
 
 1. Use Java 21, Fabric Loader **0.17.2+** e Fabric API **0.116.18+1.21.1**.

@@ -1,0 +1,1 @@
+59f279200d74b254c9aa2cea74801f6a5cfee3f042d2543d027ba7992ac5d476  shirokai-guard-0.2.0-alpha.1.jar
