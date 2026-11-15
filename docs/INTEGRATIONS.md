@@ -1,5 +1,11 @@
 # Integrações: inspeção e limites
 
+> Atualização 0.3.0-alpha.1: Raids e Essentials agora têm integração de entrada
+> autorizada e pré-teleporte. Consulte [o contrato, versões e instalação](integrations/ARENA_ACCESS.md).
+> As inspeções e resultados abaixo registram a versão 0.2; resultados da atualização
+> estão no relatório vinculado no novo guia.
+
+
 Nenhuma integração concede bypass geral, altera claims ou escreve em configurações dos outros mods. O conjunto completo abaixo foi carregado simultaneamente e passou em 14 GameTests, incluindo os oito cenários base do Flan.
 
 ## Cobblemon 1.8.3+1.21.1

@@ -35,10 +35,18 @@ public final class GuardConfig {
     }
   }
 
+  public record RaidAccess(boolean enabled, int authorizationTimeoutTicks) {
+    public RaidAccess {
+      if (authorizationTimeoutTicks < 1 || authorizationTimeoutTicks > 200)
+        throw new IllegalArgumentException("authorizationTimeoutTicks: 1..200");
+    }
+  }
+
   public record Snapshot(
       Options options,
       Map<String, String> messages,
       boolean crateInteractions,
+      RaidAccess raidAccess,
       Menus menus,
       Map<String, Integer> permissions,
       Map<Flag, Map<Region.Group, String>> defaults,
@@ -57,6 +65,9 @@ public final class GuardConfig {
           "bypass");
   private static final Map<String, String> MESSAGES =
       Map.ofEntries(
+          Map.entry("entry-blocked", "§c✦ Você não pode entrar nesta região."),
+          Map.entry("raid-entry-blocked", "§c✦ Para entrar nesta arena, utilize /raid entrar."),
+          Map.entry("teleport-blocked", "§c✦ Este teleporte foi bloqueado pela proteção da região."),
           Map.entry("completed", "Concluído."),
           Map.entry("error", "Shirokai Guard: %s"),
           Map.entry("command-denied", "Comando bloqueado nesta região."),
@@ -84,7 +95,7 @@ public final class GuardConfig {
   private static final Menus DEFAULT_MENUS = new Menus("✦ SHIROKAI GUARD", 45, true);
   private static volatile Snapshot current =
       new Snapshot(
-          DEFAULT_OPTIONS, MESSAGES, true, DEFAULT_MENUS, defaultPermissions(), Map.of(), Map.of());
+          DEFAULT_OPTIONS, MESSAGES, true, new RaidAccess(true, 40), DEFAULT_MENUS, defaultPermissions(), Map.of(), Map.of());
 
   private GuardConfig() {}
 
@@ -101,6 +112,8 @@ public final class GuardConfig {
   public static Menus menus() {
     return current.menus();
   }
+
+  public static RaidAccess raidAccess() { return current.raidAccess(); }
 
   public static boolean crateInteractions() {
     return current.crateInteractions();
@@ -140,6 +153,7 @@ public final class GuardConfig {
     AtomicJson.create(DIR.resolve("flags.json"), defaults);
     var integrations = new JsonObject();
     integrations.addProperty("crateInteractions", true);
+    integrations.add("raidArenaAccess", AtomicJson.object(new RaidAccess(true, 40)));
     AtomicJson.create(DIR.resolve("integrations.json"), integrations);
     var config = AtomicJson.read(DIR.resolve("config.json"));
     var options =
@@ -187,10 +201,14 @@ public final class GuardConfig {
     var f = AtomicJson.read(DIR.resolve("flags.json"));
     schema(f);
     var flags = RegionTemplate.parseFlags(f.getAsJsonObject("defaults"));
+    var integrationConfig = AtomicJson.read(DIR.resolve("integrations.json"));
+    var access = integrationConfig.has("raidArenaAccess")
+        ? integrationConfig.getAsJsonObject("raidArenaAccess") : new JsonObject();
     return new Snapshot(
         options,
         Map.copyOf(messages),
-        bool(AtomicJson.read(DIR.resolve("integrations.json")), "crateInteractions", true),
+        bool(integrationConfig, "crateInteractions", true),
+        new RaidAccess(bool(access, "enabled", true), integer(access, "authorizationTimeoutTicks", 40)),
         menus,
         Map.copyOf(levels),
         flags,

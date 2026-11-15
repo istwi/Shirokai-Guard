@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.shirokai.raids.RaidRewardOddsTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2026-11-15T10:31:19.667Z" hostname="a5c0d56c2179" time="1.199">
+  <properties/>
+  <testcase name="disabledModularRewardsDoNotHideLegacyDropsAndLegacyUsesItsOwnContributionThreshold()" classname="com.shirokai.raids.RaidRewardOddsTest" time="0.017"/>
+  <testcase name="typeAndRaritySummariesComputeAtLeastOneForIndependentDraws()" classname="com.shirokai.raids.RaidRewardOddsTest" time="0.001"/>
+  <testcase name="legacyRarityAndItemWeightsArePerDrawAndAllTiersRemainInspectable()" classname="com.shirokai.raids.RaidRewardOddsTest" time="0.001"/>
+  <testcase name="zeroChanceStillOccupiesWeightAndDoesNotGetRerolledInThePreview()" classname="com.shirokai.raids.RaidRewardOddsTest" time="0.001"/>
+  <testcase name="bossOverridesAndQuantityBoundsMatchTheDeliveryFormula()" classname="com.shirokai.raids.RaidRewardOddsTest" time="0.0"/>
+  <testcase name="topThreeIncludesPositionGateWeightAndItemChance()" classname="com.shirokai.raids.RaidRewardOddsTest" time="0.003"/>
+  <testcase name="generalDisplaysIndependentChancesRatherThanNormalizingToOneHundredPercent()" classname="com.shirokai.raids.RaidRewardOddsTest" time="0.002"/>
+  <testcase name="contributionAndRankConditionsRenormalizeOnlyEligibleWeights()" classname="com.shirokai.raids.RaidRewardOddsTest" time="0.001"/>
+  <testcase name="previewDoesNotMutateConfigurationAndPercentFormattingPreservesTinyNonzeroValues()" classname="com.shirokai.raids.RaidRewardOddsTest" time="1.129"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

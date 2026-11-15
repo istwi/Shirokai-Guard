@@ -185,9 +185,30 @@ public final class RegionManager {
       if (v == null) continue;
       priority = r.priority();
       if ("deny".equals(v)) return v;
-      if (result == null) result = v;
+      if (result == null || flag == Flag.ENTRY_MODE && "authorized-only".equals(v)) result = v;
     }
     return result;
+  }
+
+  /** Highest defined priority wins; deny > authorized-only > normal at equal priority.
+   * Inherited flags bind to the destination child region, never a global permission. */
+  public record EntryRule(boolean denied, Set<String> regions, Set<String> deniedRegions) {}
+
+  public EntryRule entryRule(String dim, int x, int y, int z, UUID actor) {
+    Integer priority = null;
+    boolean denied = false;
+    var required = new HashSet<String>();
+    var deniedRegions = new HashSet<String>();
+    for (var r : at(dim, x, y, z)) {
+      if (priority != null && r.priority() < priority) break;
+      var value = inherited(r, Flag.ENTRY_MODE, actor);
+      if (value == null) continue;
+      priority = r.priority();
+      denied |= value.equals("deny");
+      if (value.equals("deny")) deniedRegions.add(r.id());
+      if (value.equals("authorized-only")) required.add(r.id());
+    }
+    return new EntryRule(denied, Set.copyOf(required), Set.copyOf(deniedRegions));
   }
 
   public boolean allowed(String dim, int x, int y, int z, Flag flag, UUID actor) {
@@ -244,6 +265,19 @@ public final class RegionManager {
         int px = (int) Math.floor(x + (a - x) * inside),
             py = (int) Math.floor(y + (b - y) * inside),
             pz = (int) Math.floor(z + (c - z) * inside);
+        // Compare effective restrictions on both sides, including leaving a higher-priority
+        // normal exception inside a protected region. Do not trap existing occupants.
+        double epsilon = Math.min(1e-7, (interval[1] - interval[0]) / 4);
+        if (epsilon > 0) {
+          double t0 = Math.max(0, t - epsilon), t1 = Math.min(1, t + epsilon);
+          var oldRule = entryRule(dimension, (int)Math.floor(x+(a-x)*t0),
+              (int)Math.floor(y+(b-y)*t0), (int)Math.floor(z+(c-z)*t0), actor);
+          var newRule = entryRule(dimension, (int)Math.floor(x+(a-x)*t1),
+              (int)Math.floor(y+(b-y)*t1), (int)Math.floor(z+(c-z)*t1), actor);
+          var occupied = new HashSet<>(oldRule.regions()); occupied.addAll(oldRule.deniedRegions());
+          if (newRule.regions().stream().anyMatch(id -> !occupied.contains(id))
+              || newRule.deniedRegions().stream().anyMatch(id -> !occupied.contains(id))) return false;
+        }
         if (!allowed(dimension, px, py, pz, edge == 0 ? Flag.ENTRY : Flag.EXIT, actor))
           return false;
       }

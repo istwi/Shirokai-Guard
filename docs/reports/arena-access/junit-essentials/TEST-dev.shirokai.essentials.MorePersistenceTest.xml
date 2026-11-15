@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="dev.shirokai.essentials.MorePersistenceTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2026-11-15T10:33:04" hostname="a5c0d56c2179" time="0.519">
+  <properties/>
+  <testcase name="schemaOneUpgradesWithoutLosingHomesAndKeepsBackup()" classname="dev.shirokai.essentials.MorePersistenceTest" time="0.207"/>
+  <testcase name="knownPlayerDirectoryKeepsOriginalFirstSeenAndUpdatesName()" classname="dev.shirokai.essentials.MorePersistenceTest" time="0.061"/>
+  <testcase name="warningAndMuteOnlyRecordsDoNotCreateTickWork()" classname="dev.shirokai.essentials.MorePersistenceTest" time="0.036"/>
+  <testcase name="muteJailFreezeAndWarningsAreDurableAndExpiryIsExact()" classname="dev.shirokai.essentials.MorePersistenceTest" time="0.095"/>
+  <testcase name="unsupportedFutureDataSchemaIsNeverRewritten()" classname="dev.shirokai.essentials.MorePersistenceTest" time="0.007"/>
+  <testcase name="mailIgnoreNickModesAndKitReceiptSurviveRestart()" classname="dev.shirokai.essentials.MorePersistenceTest" time="0.055"/>
+  <testcase name="invalidModerationDataIsNotOverwritten()" classname="dev.shirokai.essentials.MorePersistenceTest" time="0.006"/>
+  <testcase name="migrationPreviewNeverCreatesMissingPlayerFiles()" classname="dev.shirokai.essentials.MorePersistenceTest" time="0.011"/>
+  <testcase name="auditIsValidJsonPerLineEvenWithNewlinesInInput()" classname="dev.shirokai.essentials.MorePersistenceTest" time="0.018"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

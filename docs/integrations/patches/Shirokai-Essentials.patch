@@ -1,0 +1,74 @@
+diff --git a/build.gradle b/build.gradle
+index 02c05f2..c962488 100644
+--- a/build.gradle
++++ b/build.gradle
+@@ -1,5 +1,5 @@
+ plugins { id 'fabric-loom' version '1.9.2' }
+-version = '0.3.0'
++version = '0.3.1-guard.1'
+ group = 'dev.shirokai'
+ base { archivesName = 'shirokai-essentials' }
+ repositories { mavenCentral() }
+diff --git a/src/main/java/dev/shirokai/essentials/ShirokaiEssentials.java b/src/main/java/dev/shirokai/essentials/ShirokaiEssentials.java
+index f713a2e..9cd2d24 100644
+--- a/src/main/java/dev/shirokai/essentials/ShirokaiEssentials.java
++++ b/src/main/java/dev/shirokai/essentials/ShirokaiEssentials.java
+@@ -24,7 +24,7 @@ import java.nio.file.Path;
+ import java.util.*;
+ 
+ public final class ShirokaiEssentials implements DedicatedServerModInitializer {
+-    public static final String VERSION = "0.3.0";
++    public static final String VERSION = "0.3.1-guard.1";
+     public static final Logger LOGGER = LoggerFactory.getLogger("shirokai_essentials");
+     private static ShirokaiEssentials INSTANCE;
+     public static ShirokaiEssentials instance() { return INSTANCE; }
+diff --git a/src/main/java/dev/shirokai/essentials/teleport/TeleportService.java b/src/main/java/dev/shirokai/essentials/teleport/TeleportService.java
+index 258f368..608cf51 100644
+--- a/src/main/java/dev/shirokai/essentials/teleport/TeleportService.java
++++ b/src/main/java/dev/shirokai/essentials/teleport/TeleportService.java
+@@ -141,6 +141,7 @@ public final class TeleportService {
+         if (battleRestriction.test(p) || (!system && restriction.test(p))) return messages.error(p.getCommandSource(), "unsafe");
+         if (!safe(p.getServer(), destination) || !p.isAlive() || p.hasVehicle() || p.hasPassengers() || p.isSleeping()) return messages.error(p.getCommandSource(), "unsafe");
+         var cfg = settings.get();
++        if (!GuardTeleportAccess.allowed(p, destination)) return messages.error(p.getCommandSource(), "unsafe");
+         Position origin = position(p);
+         // Commit history/cooldown before changing worlds. A failed write cancels the teleport.
+         data.get().update(p.getUuid(), d -> {
+@@ -148,6 +149,9 @@ public final class TeleportService {
+             if (cfg.feature("teleport_cooldown")) d.nextTeleportAt = System.currentTimeMillis() + cfg.teleport.cooldownSeconds * 1000L;
+         });
+         p.teleport(world(p.getServer(), destination), destination.x(), destination.y(), destination.z(), destination.yaw(), destination.pitch());
++        if (p.getServerWorld() != world(p.getServer(), destination)
++            || p.getPos().squaredDistanceTo(destination.x(),destination.y(),destination.z()) > 1e-8)
++            return messages.error(p.getCommandSource(), "unsafe");
+         p.fallDistance = 0;
+         return messages.send(p.getCommandSource(), "teleported");
+     }
+diff --git a/src/main/java/dev/shirokai/essentials/teleport/GuardTeleportAccess.java b/src/main/java/dev/shirokai/essentials/teleport/GuardTeleportAccess.java
+new file mode 100644
+index 0000000..0b58e95
+--- /dev/null
++++ b/src/main/java/dev/shirokai/essentials/teleport/GuardTeleportAccess.java
+@@ -0,0 +1,22 @@
++package dev.shirokai.essentials.teleport;
++
++import dev.shirokai.essentials.ShirokaiEssentials;
++import dev.shirokai.essentials.persistence.Position;
++import net.fabricmc.loader.api.FabricLoader;
++import net.minecraft.server.network.ServerPlayerEntity;
++import java.util.UUID;
++
++/** Guard preflight before history/cooldown commit; other restrictions remain independent. */
++final class GuardTeleportAccess {
++    static boolean allowed(ServerPlayerEntity player, Position destination) {
++        if (!FabricLoader.getInstance().isModLoaded("shirokai_guard")) return true;
++        try {
++            return (boolean)Class.forName("dev.shirokai.guard.api.GuardEntryApi")
++                .getMethod("canTeleport",UUID.class,String.class,double.class,double.class,double.class)
++                .invoke(null,player.getUuid(),destination.dimension(),destination.x(),destination.y(),destination.z());
++        } catch (ReflectiveOperationException e) {
++            ShirokaiEssentials.LOGGER.error("Guard sem API de pré-teleporte compatível; teleporte recusado",e);
++            return false;
++        }
++    }
++}

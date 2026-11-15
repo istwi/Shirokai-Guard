@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="dev.shirokai.essentials.SettingsTest" tests="13" skipped="0" failures="0" errors="0" timestamp="2026-11-15T10:33:05" hostname="a5c0d56c2179" time="0.694">
+  <properties/>
+  <testcase name="createsAllConfigurationFiles()" classname="dev.shirokai.essentials.SettingsTest" time="0.067"/>
+  <testcase name="oldEconomySettingsCannotRestoreCommandsOrPreventFreeServices()" classname="dev.shirokai.essentials.SettingsTest" time="0.121"/>
+  <testcase name="rejectsUnsupportedSchemaAndDoesNotOverwrite()" classname="dev.shirokai.essentials.SettingsTest" time="0.075"/>
+  <testcase name="rejectsUnsupportedModule()" classname="dev.shirokai.essentials.SettingsTest" time="0.035"/>
+  <testcase name="reloadKeepsStartupTopologyButUpdatesSafeValues()" classname="dev.shirokai.essentials.SettingsTest" time="0.048"/>
+  <testcase name="newModulesRemainOptInAndEconomyCommandsAreAbsent()" classname="dev.shirokai.essentials.SettingsTest" time="0.027"/>
+  <testcase name="rejectsBadLimitsAndAliases()" classname="dev.shirokai.essentials.SettingsTest" time="0.04"/>
+  <testcase name="upgradingNeverRestoresOmittedOldPermissionsCommandsOrFeatures()" classname="dev.shirokai.essentials.SettingsTest" time="0.064"/>
+  <testcase name="privilegeAndOptionalFeatureGatesCannotBeBypassedByCommands()" classname="dev.shirokai.essentials.SettingsTest" time="0.083"/>
+  <testcase name="featureAndCommandAreIndependent()" classname="dev.shirokai.essentials.SettingsTest" time="0.033"/>
+  <testcase name="moderationFunctionsHaveIndependentGates()" classname="dev.shirokai.essentials.SettingsTest" time="0.042"/>
+  <testcase name="disabledModuleDisablesAllItsCommands()" classname="dev.shirokai.essentials.SettingsTest" time="0.03"/>
+  <testcase name="motdAndAfkAutomationDoNotDependOnCommands()" classname="dev.shirokai.essentials.SettingsTest" time="0.019"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

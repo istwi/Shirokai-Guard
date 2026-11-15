@@ -1,3 +1,11 @@
+## 0.3.0-alpha.1
+
+- Adiciona `entry-mode` por região/grupo com valores `normal`, `deny` e `authorized-only`, prioridades e herança.
+- API opcional para teleporte de raid com autorização temporária de uso único, restrita ao destino, sem bypass de outras flags.
+- Mantém saídas, comandos e destinos comuns; proteção de movimento, veículos, login/respawn e teleportes usa os hooks existentes.
+- Integrações reais atualizadas no Raids e Essentials, distribuídas como patches e binários separados.
+- Acrescenta testes unitários, GameTests e perfil opcional com os mods reais.
+
 # Changelog
 
 ## 0.2.0-alpha.1 — 13/11/2026

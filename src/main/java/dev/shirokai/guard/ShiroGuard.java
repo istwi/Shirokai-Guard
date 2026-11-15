@@ -46,6 +46,7 @@ public final class ShiroGuard implements ModInitializer {
         });
     ServerLifecycleEvents.SERVER_STOPPING.register(
         server -> {
+          EntryAccess.clear();
           save();
           WRITER.shutdown();
           try {
@@ -58,6 +59,7 @@ public final class ShiroGuard implements ModInitializer {
     ServerPlayConnectionEvents.DISCONNECT.register(
         (handler, server) -> {
           BYPASS.remove(handler.player.getUuid());
+          EntryAccess.forget(handler.player.getUuid());
           GuardCommands.forget(handler.player.getUuid());
         });
     GuardCommands.register();
@@ -120,6 +122,7 @@ public final class ShiroGuard implements ModInitializer {
     REGIONS.replace(regions);
     GuardConfig.apply(config);
     REGIONS.cacheLimit(config.options().queryCacheEntries());
+    EntryAccess.clear();
     GuardMenus.invalidate();
     TemplateActions.clear();
   }

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="dev.shirokai.essentials.ConflictsTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-15T10:33:02" hostname="a5c0d56c2179" time="1.905">
+  <properties/>
+  <testcase name="alternativePolicyUsesOnlyExplicitAvailableAlias()" classname="dev.shirokai.essentials.ConflictsTest" time="1.689"/>
+  <testcase name="preservesExistingCommandAndDoesNotRegisterBypassAlias()" classname="dev.shirokai.essentials.ConflictsTest" time="0.047"/>
+  <testcase name="laterMergedSubcommandsAreReportedWithoutRemovingThem()" classname="dev.shirokai.essentials.ConflictsTest" time="0.047"/>
+  <testcase name="disabledAliasAndCommandNeverEnterPlan()" classname="dev.shirokai.essentials.ConflictsTest" time="0.032"/>
+  <testcase name="failModuleAndFailStartupAreAppliedBeforeRegistration()" classname="dev.shirokai.essentials.ConflictsTest" time="0.041"/>
+  <system-out><![CDATA[[10:33:04] [Test worker/WARN]: Conflito /home: Raiz existente preservada (pre-registration)
+[10:33:04] [Test worker/WARN]: Conflito /ocupado: Alias existente preservado (pre-registration)
+[10:33:04] [Test worker/WARN]: Conflito /home: Raiz existente preservada (pre-registration)
+[10:33:04] [Test worker/WARN]: Conflito /home: Árvore alterada após registro; revisar mods e reiniciar. Nenhum nó de terceiros foi removido. (post-registration)
+[10:33:04] [Test worker/WARN]: Conflito /home: Raiz existente preservada (pre-registration)
+[10:33:04] [Test worker/WARN]: Conflito /home: Raiz existente preservada (pre-registration)
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="dev.shirokai.guard.core.EntryAccessTest" tests="12" skipped="0" failures="0" errors="0" timestamp="2026-11-15T10:38:38" hostname="a5c0d56c2179" time="0.24">
+  <properties/>
+  <testcase name="walkingAcrossAndExiting()" classname="dev.shirokai.guard.core.EntryAccessTest" time="0.079"/>
+  <testcase name="localOnlyAndNoCommandBlocking()" classname="dev.shirokai.guard.core.EntryAccessTest" time="0.004"/>
+  <testcase name="overlapPriorityAndTieRequireAllRegions()" classname="dev.shirokai.guard.core.EntryAccessTest" time="0.004"/>
+  <testcase name="wrongPlayerRegionOrDimensionBurnsGrant()" classname="dev.shirokai.guard.core.EntryAccessTest" time="0.011"/>
+  <testcase name="inheritanceAndGroups()" classname="dev.shirokai.guard.core.EntryAccessTest" time="0.004"/>
+  <testcase name="validatesModesAndPreservesUnset()" classname="dev.shirokai.guard.core.EntryAccessTest" time="0.004"/>
+  <testcase name="disconnectRaidEndAndRestartInvalidate()" classname="dev.shirokai.guard.core.EntryAccessTest" time="0.003"/>
+  <testcase name="occupantsAreNotTrappedByUnrelatedOverlaps()" classname="dev.shirokai.guard.core.EntryAccessTest" time="0.003"/>
+  <testcase name="singleUseAndExpiry()" classname="dev.shirokai.guard.core.EntryAccessTest" time="0.002"/>
+  <testcase name="leavingNormalExceptionRequiresEntryAgain()" classname="dev.shirokai.guard.core.EntryAccessTest" time="0.003"/>
+  <testcase name="onlyOneConcurrentConsumerWins()" classname="dev.shirokai.guard.core.EntryAccessTest" time="0.008"/>
+  <testcase name="persistenceRoundTripsEntryModeAlongsideExistingFlags()" classname="dev.shirokai.guard.core.EntryAccessTest" time="0.105"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

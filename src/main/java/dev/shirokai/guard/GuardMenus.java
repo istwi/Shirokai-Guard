@@ -380,13 +380,13 @@ public final class GuardMenus {
                     flag.id(),
                     "Grupo: " + group,
                     "Valor local: " + value,
-                    flag.text() || flag.list()
+                    flag.text() || flag.list() || flag == Flag.ENTRY_MODE
                         ? "Esquerdo: editar · direito: unset"
                         : "Clique para alternar unset / allow / deny"),
                 button -> {
                   require(p, "region.flag");
                   unchanged(r);
-                  if ((flag.text() || flag.list()) && button == 0)
+                  if ((flag.text() || flag.list() || flag == Flag.ENTRY_MODE) && button == 0)
                     prompt(
                         p,
                         "Valor de " + flag.id(),
@@ -406,7 +406,7 @@ public final class GuardMenus {
                         });
                   else {
                     String next =
-                        flag.text() || flag.list()
+                        flag.text() || flag.list() || flag == Flag.ENTRY_MODE
                             ? "unset"
                             : value.equals("unset")
                                 ? "allow"

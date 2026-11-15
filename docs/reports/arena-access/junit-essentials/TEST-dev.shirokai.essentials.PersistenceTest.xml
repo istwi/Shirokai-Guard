@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="dev.shirokai.essentials.PersistenceTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-11-15T10:33:05" hostname="a5c0d56c2179" time="0.16">
+  <properties/>
+  <testcase name="callersCannotMutateWithoutPersisting()" classname="dev.shirokai.essentials.PersistenceTest" time="0.011"/>
+  <testcase name="homesBackCooldownAndToggleSurviveRestart()" classname="dev.shirokai.essentials.PersistenceTest" time="0.038"/>
+  <testcase name="failedWritePreservesLiveAndStoredState()" classname="dev.shirokai.essentials.PersistenceTest" time="0.028"/>
+  <testcase name="corruptFileIsPreserved()" classname="dev.shirokai.essentials.PersistenceTest" time="0.008"/>
+  <testcase name="backupsContainPreviousSuccessfulRevision()" classname="dev.shirokai.essentials.PersistenceTest" time="0.025"/>
+  <testcase name="invalidCoordinatesAreRejected()" classname="dev.shirokai.essentials.PersistenceTest" time="0.021"/>
+  <testcase name="globalDestinationsPreserveNamespacesAndVisibility()" classname="dev.shirokai.essentials.PersistenceTest" time="0.014"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

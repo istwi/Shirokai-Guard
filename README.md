@@ -2,14 +2,24 @@
 
 Mod **server-side** de proteção de regiões para **Minecraft Java 1.21.1 / Fabric / Java 21**. Implementação própria, sem Bukkit, Paper ou WorldEdit. O Guard inicia sem Cobblemon, Flan ou outros mods Shirokai.
 
-**Estado: 0.2.0-alpha.1.** Proteções, menus administrativos, templates opcionais, visualização e configuração implementados. O conjunto com Flan, Cobblemon, LuckPerms e os módulos Shirokai passou nos cenários de integração documentados. Versão experimental; veja os resultados e limites em [VALIDATION.md](docs/VALIDATION.md).
+**Estado: 0.3.0-alpha.1.** Proteções, menus administrativos, templates, visualização e acesso autorizado por região. Versão experimental. Resultados desta atualização e limites: [acesso a arenas](docs/integrations/ARENA_ACCESS.md). Resultados históricos da versão 0.2: [VALIDATION.md](docs/VALIDATION.md).
 
-[Baixar JAR 0.2.0-alpha.1](https://github.com/istwi/Shirokai-Guard/raw/refs/tags/v0.2.0-alpha.1/releases/v0.2.0-alpha.1/shirokai-guard-0.2.0-alpha.1.jar) · [Pré-release](https://github.com/istwi/Shirokai-Guard/releases/tag/v0.2.0-alpha.1)
+[Baixar Guard 0.3.0-alpha.1](releases/v0.3.0-alpha.1/shirokai-guard-0.3.0-alpha.1.jar) · [Pacote completo: Guard + Raids + Essentials](releases/v0.3.0-alpha.1/shirokai-arena-access-0.3.0-alpha.1.zip)
+
+[Versão publicada anterior: 0.2.0-alpha.1](https://github.com/istwi/Shirokai-Guard/raw/refs/tags/v0.2.0-alpha.1/releases/v0.2.0-alpha.1/shirokai-guard-0.2.0-alpha.1.jar) · [Pré-release](https://github.com/istwi/Shirokai-Guard/releases/tag/v0.2.0-alpha.1)
+
+## Atualização 0.3.0-alpha.1 — acesso autorizado a arenas
+
+`/sg flag raid_arena entry-mode authorized-only` exige entrada pela API de uma
+integração, sem bloquear comandos globalmente. `/raid entrar` no Raids atualizado
+concede acesso de uso único; sair e tentar `/back` não concede uma nova entrada.
+Regiões comuns continuam funcionando como antes. Valores: `normal`, `deny`,
+`authorized-only`, `unset`. [Instalação das integrações, precedência e limites](docs/integrations/ARENA_ACCESS.md).
 
 ## Instalação
 
 1. Use Java 21, Fabric Loader **0.17.2+** e Fabric API **0.116.18+1.21.1**.
-2. Coloque somente `shirokai-guard-0.2.0-alpha.1.jar` em `mods/` do servidor.
+2. Coloque somente `shirokai-guard-0.3.0-alpha.1.jar` em `mods/` do servidor.
 3. Não instale `sources.jar`, o ZIP do projeto ou o mod de GameTests no servidor.
 4. LuckPerms é opcional. A Fabric Permissions API 0.3.1 está embutida; negativas explícitas são respeitadas. Sem provedor, os comandos usam nível de operador 2.
 5. Para as flags Pokémon, instale **Cobblemon 1.8.3+1.21.1** com suas dependências. Outros módulos Shirokai são opcionais.
@@ -61,7 +71,7 @@ Resolução: maior prioridade com valor definido; em empate, `deny` vence. Heran
 - Comandos: `blocked-commands`, `allowed-commands`.
 - Com Cobblemon instalado: `pokemon-spawn`, `pokemon-capture`, `pokemon-battle`, `pokemon-interact`, `pokemon-damage`, `pokemon-pasture`.
 
-Estados usam `allow`, `deny` ou `unset`. `invincible allow` ativa invulnerabilidade. `hunger deny` congela fome e o processamento de regeneração do HungerManager. `greeting` e `farewell` aceitam texto literal; as listas de comandos usam raízes separadas por vírgula, por exemplo `kill,op`. `allowed-commands` restringe comandos às raízes listadas; uma entrada bloqueada ainda vence em empate. Raízes com namespace não escapam de bloqueios no nome simples. Aliases de outros mods precisam ser listados explicitamente.
+Estados usam `allow`, `deny` ou `unset`; `entry-mode` usa `normal`, `deny`, `authorized-only` ou `unset`. `invincible allow` ativa invulnerabilidade. `hunger deny` congela fome e o processamento de regeneração do HungerManager. `greeting` e `farewell` aceitam texto literal; as listas de comandos usam raízes separadas por vírgula, por exemplo `kill,op`. `allowed-commands` restringe comandos às raízes listadas; uma entrada bloqueada ainda vence em empate. Raízes com namespace não escapam de bloqueios no nome simples. Aliases de outros mods precisam ser listados explicitamente.
 
 `pokemon-breeding` não é oferecida: não foi identificado um contrato de criação/reprodução para implementar essa flag no Cobblemon 1.8.3 original. Não são criados eventos fictícios.
 

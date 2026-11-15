@@ -22,6 +22,7 @@ public final class Protection {
   public static void forget(UUID id) {
     VISITS.remove(id);
     FAREWELLS.remove(id);
+    EntryAccess.forget(id);
   }
 
   public static ServerPlayerEntity actor(Entity e) {
@@ -59,10 +60,14 @@ public final class Protection {
     boolean entering = after.stream().anyMatch(r -> !before.contains(r));
     if (leaving && !ShiroGuard.allowed(world, from, Flag.EXIT, p)) return false;
     if (entering && !ShiroGuard.allowed(target, to, Flag.ENTRY, p)) return false;
+    if (!EntryAccess.transition(p, target, pos, teleport)) return false;
     if (!teleport
         && a.equals(b)
         && !ShiroGuard.REGIONS.movementAllowed(
-            a, p.getX(), p.getY(), p.getZ(), pos.x, pos.y, pos.z, p.getUuid())) return false;
+            a, p.getX(), p.getY(), p.getZ(), pos.x, pos.y, pos.z, p.getUuid())) {
+      EntryAccess.notice(p, "entry-blocked");
+      return false;
+    }
     return !teleport
         || ShiroGuard.allowed(world, from, Flag.TELEPORT, p)
             && ShiroGuard.allowed(target, to, Flag.TELEPORT, p);

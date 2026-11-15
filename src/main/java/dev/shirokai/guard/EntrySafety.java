@@ -19,7 +19,7 @@ public final class EntrySafety {
   public static boolean enforce(ServerPlayerEntity p) {
     var world = p.getServerWorld();
     var origin = p.getBlockPos();
-    if (ShiroGuard.allowed(world, origin, Flag.ENTRY, p)) return true;
+    if (ShiroGuard.allowed(world, origin, Flag.ENTRY, p) && EntryAccess.safeLogin(p, origin)) return true;
     for (int radius = 1; radius <= 16; radius++)
       for (int dx = -radius; dx <= radius; dx++)
         for (int dz = -radius; dz <= radius; dz++) {
@@ -32,7 +32,7 @@ public final class EntrySafety {
           if (y < world.getBottomY() + 1
               || y + 2 >= world.getTopY()
               || !world.getWorldBorder().contains(feet)
-              || !ShiroGuard.allowed(world, feet, Flag.ENTRY, p)) continue;
+              || (!ShiroGuard.allowed(world, feet, Flag.ENTRY, p) || !EntryAccess.safeLogin(p, feet))) continue;
           var floor = world.getBlockState(feet.down());
           if (!floor.isSideSolidFullSquare(world, feet.down(), Direction.UP)
               || !floor.getFluidState().isEmpty()

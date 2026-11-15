@@ -1,5 +1,5 @@
 plugins { id 'fabric-loom' version '1.9.2'; id 'org.jetbrains.kotlin.jvm' version '2.2.20' }
-version = '0.2.0-alpha.1'
+version = '0.3.0-alpha.1'
 group = 'dev.shirokaiguard'
 base { archivesName = 'shirokai-guard' }
 repositories { mavenCentral(); maven { url = 'https://maven.impactdev.net/repository/development'; content { includeGroup 'com.cobblemon' } } }
@@ -55,9 +55,11 @@ tasks.named('runGametest') {
 
 processGametestResources {
     inputs.property 'withCobblemon', providers.gradleProperty('withCobblemon').isPresent()
+    inputs.property 'withArenaIntegrations', providers.gradleProperty('withArenaIntegrations').isPresent()
     inputs.property 'loadTest', providers.gradleProperty('loadTest').isPresent()
     inputs.property 'visualTest', providers.gradleProperty('visualTest').isPresent()
-    def tests = providers.gradleProperty('visualTest').isPresent() ? ['VisualServerGameTests'] : providers.gradleProperty('loadTest').isPresent() ? ['LoadGameTests'] : ['GuardGameTests', 'PhaseThreeGameTests']
+    def tests = providers.gradleProperty('visualTest').isPresent() ? ['VisualServerGameTests'] : providers.gradleProperty('loadTest').isPresent() ? ['LoadGameTests'] : ['GuardGameTests', 'PhaseThreeGameTests', 'EntryModeGameTests']
+    if (providers.gradleProperty('withArenaIntegrations').isPresent()) tests.add('ArenaIntegrationGameTests')
     if (providers.gradleProperty('withCobblemon').isPresent() && !providers.gradleProperty('loadTest').isPresent() && !providers.gradleProperty('visualTest').isPresent()) tests.add('CobblemonGameTests')
     filesMatching('fabric.mod.json') { expand testEntrypoints: tests.collect { '"dev.shirokai.guard.' + it + '"' }.join(',') }
 }
@@ -80,5 +82,20 @@ if (providers.gradleProperty('withCobblemon').isPresent()) {
     tasks.named('runGametest') {
         dependsOn tasks.named('prepareCobblemonRuntime')
         classpath files(layout.buildDirectory.file('cobblemon-runtime/icu4j-71.1.jar'))
+    }
+}
+
+// Optional integration profile uses the actual locally built Raids/Essentials JARs.
+if (providers.gradleProperty('withArenaIntegrations').isPresent()) {
+    if (!providers.gradleProperty('withCobblemon').isPresent())
+        throw new GradleException('withArenaIntegrations requires -PwithCobblemon')
+    def directory = providers.gradleProperty('arenaIntegrationMods').get()
+    def mods = fileTree(directory) { include '*.jar' }
+    dependencies {
+        modRuntimeOnly mods
+        // Loom development runs do not automatically expose nested non-Minecraft libraries.
+        mods.files.each { archive ->
+            runtimeOnly files(zipTree(archive).matching { include 'META-INF/jars/*.jar' })
+        }
     }
 }

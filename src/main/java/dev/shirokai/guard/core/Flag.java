@@ -47,6 +47,7 @@ public enum Flag {
   ITEM_DROP,
   ITEM_PICKUP,
   ENTRY,
+  ENTRY_MODE,
   EXIT,
   TELEPORT,
   GREETING,
@@ -77,6 +78,11 @@ public enum Flag {
   public String validate(String value) {
     if (value == null || value.isBlank() || value.length() > 2048)
       throw new IllegalArgumentException("Valor inválido");
+    if (this == ENTRY_MODE) {
+      if (!Set.of("normal", "deny", "authorized-only").contains(value))
+        throw new IllegalArgumentException("Use normal, deny, authorized-only ou unset");
+      return value;
+    }
     if (!text() && !list() && !Set.of("allow", "deny").contains(value))
       throw new IllegalArgumentException("Use allow, deny ou unset");
     return value;

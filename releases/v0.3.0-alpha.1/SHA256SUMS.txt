@@ -1,0 +1,2 @@
+c2e84cefe1c1ab94a8b708e8a02371c1abf6e716f61066ac8ff0db7eb7960a54  shirokai-arena-access-0.3.0-alpha.1.zip
+d5e5ea365157b80fc37eb2327479a77dc864ddd0171cb8852776c03603339745  shirokai-guard-0.3.0-alpha.1.jar

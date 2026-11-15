@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.shirokai.raids.core.RaidCombatCoordinatorTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-11-15T10:31:21.676Z" hostname="a5c0d56c2179" time="0.095">
+  <properties/>
+  <testcase name="threeSessionsShareEffectiveDamageAndCloseExactlyOnce()" classname="com.shirokai.raids.core.RaidCombatCoordinatorTest" time="0.041"/>
+  <testcase name="capacityCountsActiveSessionsAndDisconnectPreservesContribution()" classname="com.shirokai.raids.core.RaidCombatCoordinatorTest" time="0.001"/>
+  <testcase name="tokensReplayAndReconnectCannotCreditOldEvents()" classname="com.shirokai.raids.core.RaidCombatCoordinatorTest" time="0.001"/>
+  <testcase name="hardCapIsOneHundredActualSessionsAndOnlyDepartureOpensAPlace()" classname="com.shirokai.raids.core.RaidCombatCoordinatorTest" time="0.007"/>
+  <testcase name="invalidEventsAndZeroDamageNeverCreateContribution()" classname="com.shirokai.raids.core.RaidCombatCoordinatorTest" time="0.003"/>
+  <testcase name="cancellationClosesRemainingSessionsWithoutClaimingVictory()" classname="com.shirokai.raids.core.RaidCombatCoordinatorTest" time="0.002"/>
+  <testcase name="oneHundredConcurrentLedgerCallsConserveHealthWithoutProvingGameCapacity()" classname="com.shirokai.raids.core.RaidCombatCoordinatorTest" time="0.025"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

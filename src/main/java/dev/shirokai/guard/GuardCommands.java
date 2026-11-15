@@ -207,7 +207,7 @@ public final class GuardCommands {
                     + " contract <n> <direção>, define <id>|__global__,"
                     + " redefine/remove/info/select/flags <id>, list, setpriority <id> <n>,"
                     + " setparent <id> <pai|none>, addowner/removeowner/addmember/removemember <id>"
-                    + " <nome online|UUID>, flag <id> <flag> <allow|deny|unset|texto|lista>"
+                    + " <nome online|UUID>, flag <id> <flag> <allow|deny|normal|authorized-only|unset|texto|lista>"
                     + " [@all|@owners|@members|@nonmembers], menu, template, visualize"
                     + " <região|off>, cancel, save, reload, status, debug, bypass";
         case "wand" -> {

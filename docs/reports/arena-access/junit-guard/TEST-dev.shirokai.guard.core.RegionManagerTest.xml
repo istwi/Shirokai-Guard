@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="dev.shirokai.guard.core.RegionManagerTest" tests="23" skipped="0" failures="0" errors="0" timestamp="2026-11-15T10:38:38" hostname="a5c0d56c2179" time="0.039">
+  <properties/>
+  <testcase name="inclusiveBoundsAndNegativeChunks()" classname="dev.shirokai.guard.core.RegionManagerTest" time="0.001"/>
+  <testcase name="movementCannotJumpAcrossNarrowRegion()" classname="dev.shirokai.guard.core.RegionManagerTest" time="0.001"/>
+  <testcase name="rejectInvalidFlagsAndRegions()" classname="dev.shirokai.guard.core.RegionManagerTest" time="0.002"/>
+  <testcase name="boundsResizeAndContractValidation()" classname="dev.shirokai.guard.core.RegionManagerTest" time="0.001"/>
+  <testcase name="highPriorityOverridesLowerDeny()" classname="dev.shirokai.guard.core.RegionManagerTest" time="0.001"/>
+  <testcase name="globalAndLargeRegions()" classname="dev.shirokai.guard.core.RegionManagerTest" time="0.001"/>
+  <testcase name="denyWinsTiesIndependentOfInsertionOrder()" classname="dev.shirokai.guard.core.RegionManagerTest" time="0.002"/>
+  <testcase name="commandNamespacesAndLists()" classname="dev.shirokai.guard.core.RegionManagerTest" time="0.002"/>
+  <testcase name="inheritanceAndUnset()" classname="dev.shirokai.guard.core.RegionManagerTest" time="0.002"/>
+  <testcase name="dimensionsAreIsolated()" classname="dev.shirokai.guard.core.RegionManagerTest" time="0.001"/>
+  <testcase name="redefineInvalidatesIndex()" classname="dev.shirokai.guard.core.RegionManagerTest" time="0.001"/>
+  <testcase name="unsetAllows()" classname="dev.shirokai.guard.core.RegionManagerTest" time="0.001"/>
+  <testcase name="buildFallback()" classname="dev.shirokai.guard.core.RegionManagerTest" time="0.001"/>
+  <testcase name="cyclesRejectedWithoutMutation()" classname="dev.shirokai.guard.core.RegionManagerTest" time="0.002"/>
+  <testcase name="unsetHighPriorityFallsThrough()" classname="dev.shirokai.guard.core.RegionManagerTest" time="0.0"/>
+  <testcase name="duplicateSnapshotRejected()" classname="dev.shirokai.guard.core.RegionManagerTest" time="0.0"/>
+  <testcase name="movementExitAndHostileCoordinates()" classname="dev.shirokai.guard.core.RegionManagerTest" time="0.001"/>
+  <testcase name="childBlocksParentRemoval()" classname="dev.shirokai.guard.core.RegionManagerTest" time="0.002"/>
+  <testcase name="uuidGroupsAndInheritedMembership()" classname="dev.shirokai.guard.core.RegionManagerTest" time="0.001"/>
+  <testcase name="immutableCollections()" classname="dev.shirokai.guard.core.RegionManagerTest" time="0.002"/>
+  <testcase name="commandAllowListIsRestrictive()" classname="dev.shirokai.guard.core.RegionManagerTest" time="0.001"/>
+  <testcase name="missingParentRejected()" classname="dev.shirokai.guard.core.RegionManagerTest" time="0.001"/>
+  <testcase name="specificOverridesBuildInSameRegion()" classname="dev.shirokai.guard.core.RegionManagerTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
