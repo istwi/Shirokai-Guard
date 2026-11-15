@@ -49,6 +49,7 @@ public final class Protection {
   public static boolean transition(
       ServerPlayerEntity p, ServerWorld target, Vec3d pos, boolean teleport) {
     if (ShiroGuard.bypass(p)) return true;
+    if (!MobilityProtection.transition(p,target,pos)) return false;
     var from = p.getBlockPos();
     var to = BlockPos.ofFloored(pos);
     var world = p.getServerWorld();
@@ -64,7 +65,7 @@ public final class Protection {
     if (!teleport
         && a.equals(b)
         && !ShiroGuard.REGIONS.movementAllowed(
-            a, p.getX(), p.getY(), p.getZ(), pos.x, pos.y, pos.z, p.getUuid())) {
+            a, p.getX(), p.getY(), p.getZ(), pos.x, pos.y, pos.z, p.getUuid(), MobilityProtection.activities(p))) {
       EntryAccess.notice(p, "entry-blocked");
       return false;
     }
@@ -174,6 +175,9 @@ public final class Protection {
             entityAllowed(actor(p), target, false) ? ActionResult.PASS : ActionResult.FAIL);
     ServerLivingEntityEvents.ALLOW_DAMAGE.register(
         (entity, source, amount) -> {
+          if (entity instanceof ServerPlayerEntity landingPlayer
+              && source.isIn(net.minecraft.registry.tag.DamageTypeTags.IS_FALL)
+              && MobilityProtection.protectsLanding(landingPlayer)) return false;
           var attacker = actor(source.getAttacker());
           if (entity instanceof ServerPlayerEntity victim && !ShiroGuard.bypass(victim)) {
             var pos = entity.getBlockPos();

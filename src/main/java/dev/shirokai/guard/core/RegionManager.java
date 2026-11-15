@@ -246,6 +246,12 @@ public final class RegionManager {
    */
   public boolean movementAllowed(
       String dimension, double x, double y, double z, double a, double b, double c, UUID actor) {
+    return movementAllowed(dimension,x,y,z,a,b,c,actor,Set.of());
+  }
+
+  public boolean movementAllowed(
+      String dimension, double x, double y, double z, double a, double b, double c,
+      UUID actor, Set<Flag> activities) {
     if (!Double.isFinite(x + y + z + a + b + c)) return false;
     if (Math.abs(a - x) > 128 || Math.abs(b - y) > 128 || Math.abs(c - z) > 128) return false;
     var candidates = new HashSet<>(wide.getOrDefault(dimension, List.of()));
@@ -272,6 +278,11 @@ public final class RegionManager {
         double epsilon = Math.min(1e-7, (interval[1] - interval[0]) / 4);
         if (epsilon > 0) {
           double t0 = Math.max(0, t - epsilon), t1 = Math.min(1, t + epsilon);
+          for (var activity : activities)
+            if (allowed(dimension,(int)Math.floor(x+(a-x)*t0),(int)Math.floor(y+(b-y)*t0),
+                    (int)Math.floor(z+(c-z)*t0),activity,actor)
+                && !allowed(dimension,(int)Math.floor(x+(a-x)*t1),(int)Math.floor(y+(b-y)*t1),
+                    (int)Math.floor(z+(c-z)*t1),activity,actor)) return false;
           var oldRule = entryRule(dimension, (int)Math.floor(x+(a-x)*t0),
               (int)Math.floor(y+(b-y)*t0), (int)Math.floor(z+(c-z)*t0), actor);
           var newRule = entryRule(dimension, (int)Math.floor(x+(a-x)*t1),

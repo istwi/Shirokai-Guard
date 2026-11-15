@@ -1,0 +1,1 @@
+ba0b48fb080c07c43dc48fb8ef0f1ffd19f44a06e6003d0074a3dde28ba23e5d  shirokai-guard-0.5.0-alpha.1.jar

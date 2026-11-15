@@ -2,11 +2,23 @@
 
 Mod **server-side** de proteção de regiões para **Minecraft Java 1.21.1 / Fabric / Java 21**. Implementação própria, sem Bukkit, Paper ou WorldEdit. O Guard inicia sem Cobblemon, Flan ou outros mods Shirokai.
 
-**Estado: 0.4.0-alpha.1.** Proteções, menus administrativos, templates, visualização e acesso autorizado por região. Versão experimental. Resultados desta atualização e limites: [entrada por comando](docs/integrations/COMMAND_ENTRY.md). Resultados históricos da versão 0.2: [VALIDATION.md](docs/VALIDATION.md).
+**Estado: 0.5.0-alpha.1.** Proteções, menus administrativos, templates, visualização e acesso autorizado por região. Versão experimental. Resultados desta atualização e limites: [voo e montaria](docs/integrations/FLIGHT_AND_MOUNTS.md). Resultados históricos da versão 0.2: [VALIDATION.md](docs/VALIDATION.md).
 
-[Baixar Guard 0.4.0-alpha.1](releases/v0.4.0-alpha.1/shirokai-guard-0.4.0-alpha.1.jar) · [Pacote completo atualizado](releases/v0.4.0-alpha.1/shirokai-command-entry-0.4.0-alpha.1.zip)
+[Baixar Guard 0.5.0-alpha.1](releases/v0.5.0-alpha.1/shirokai-guard-0.5.0-alpha.1.jar) · [Pacote anterior 0.4 com Raids/Essentials](releases/v0.4.0-alpha.1/shirokai-command-entry-0.4.0-alpha.1.zip)
 
 [Versão publicada anterior: 0.2.0-alpha.1](https://github.com/istwi/Shirokai-Guard/raw/refs/tags/v0.2.0-alpha.1/releases/v0.2.0-alpha.1/shirokai-guard-0.2.0-alpha.1.jar) · [Pré-release](https://github.com/istwi/Shirokai-Guard/releases/tag/v0.2.0-alpha.1)
+
+## Atualização 0.5.0-alpha.1 — voo e montaria por região
+
+```mcfunction
+/sg flag loja fly deny
+/sg flag loja elytra deny
+/sg flag loja pokemon-mount deny
+```
+
+Atualize somente o Guard. As flags preservam grupos, prioridades e bypass;
+voo por habilidades, élitros e montaria são independentes. O Guard mantém as
+permissões de voo para fora da região. [Comportamento, segurança e testes](docs/integrations/FLIGHT_AND_MOUNTS.md).
 
 ## Atualização 0.4.0-alpha.1 — entrada por comando exato
 
@@ -34,7 +46,7 @@ Regiões comuns continuam funcionando como antes. Valores: `normal`, `deny`,
 ## Instalação
 
 1. Use Java 21, Fabric Loader **0.17.2+** e Fabric API **0.116.18+1.21.1**.
-2. Coloque somente `shirokai-guard-0.4.0-alpha.1.jar` em `mods/` do servidor.
+2. Coloque somente `shirokai-guard-0.5.0-alpha.1.jar` em `mods/` do servidor.
 3. Não instale `sources.jar`, o ZIP do projeto ou o mod de GameTests no servidor.
 4. LuckPerms é opcional. A Fabric Permissions API 0.3.1 está embutida; negativas explícitas são respeitadas. Sem provedor, os comandos usam nível de operador 2.
 5. Para as flags Pokémon, instale **Cobblemon 1.8.3+1.21.1** com suas dependências. Outros módulos Shirokai são opcionais.

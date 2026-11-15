@@ -1,5 +1,7 @@
 # Integrações: inspeção e limites
 
+Atualização 0.5.0: [voo, élitros e montarias com o evento real do Cobblemon](integrations/FLIGHT_AND_MOUNTS.md).
+
 Atualização 0.4.0: [entrada por comando exato e Essentials 0.3.2-guard.1](integrations/COMMAND_ENTRY.md).
 
 > Atualização 0.3.0-alpha.1: Raids e Essentials agora têm integração de entrada

@@ -1,3 +1,11 @@
+## 0.5.0-alpha.1
+
+- Flags independentes `fly`, `elytra` e `pokemon-mount`, com grupos, herança e prioridades.
+- Bloqueio de ativação e da entrada já voando/montado, incluindo travessia física de áreas estreitas.
+- Evento de montaria real do Cobblemon e proteção adicional contra montagem nativa forçada.
+- Encerramento de atividades já proibidas no local com proteção temporária de queda e preservação das permissões de voo.
+- Atualização do manual e testes com voo, élitros, montarias terrestres/aquáticas/aéreas e regressões das integrações.
+
 ## 0.4.0-alpha.1
 
 - Novo modo `command-only` e `/sg entry-command <região> add/remove/list/clear`.

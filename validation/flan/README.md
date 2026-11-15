@@ -1,6 +1,6 @@
 # Validação do Guard com Flan real
 
-Este projeto carrega o **JAR instalável** do Shirokai Guard 0.3.0-alpha.1 e o Flan **1.21.1-1.12.8-fabric** do Modrinth. Não altera o código de produção do Guard, as bibliotecas do Flan ou dados de um servidor existente. Os claims de teste são criados apenas no mundo descartável em `build/gametest/` deste projeto.
+Este projeto carrega o **JAR instalável** do Shirokai Guard 0.5.0-alpha.1 e o Flan **1.21.1-1.12.8-fabric** do Modrinth. Não altera o código de produção do Guard, as bibliotecas do Flan ou dados de um servidor existente. Os claims de teste são criados apenas no mundo descartável em `build/gametest/` deste projeto.
 
 O SHA-512 do Flan foi conferido com o publicado pela API Modrinth (versão `1SJYtmxm`). O JAR resolvido pelo Maven foi comparado ao mesmo arquivo verificado. Lingua Bibliotheca e SnakeYAML são extraídos, sem modificações, dos JARs internos do Flan para o lançamento de desenvolvimento. Nenhum deles é redistribuído dentro do Guard.
 

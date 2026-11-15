@@ -15,6 +15,10 @@ import net.minecraft.world.World;
 /** Optional class: only loaded when Cobblemon 1.8.3 is present. */
 public final class CobblemonCompat {
   public static void register() {
+    CobblemonEvents.RIDE_EVENT_PRE.subscribe(
+        (Consumer<com.cobblemon.mod.common.api.events.pokemon.RidePokemonEvent.Pre>) event -> {
+          if (!MobilityProtection.mountAllowed(event.getPlayer(),event.getPokemon())) event.cancel();
+        });
     CobblemonEvents.THROWN_POKEBALL_HIT.subscribe(
         (Consumer<ThrownPokeballHitEvent>)
             event -> {

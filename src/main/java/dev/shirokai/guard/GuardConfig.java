@@ -65,6 +65,9 @@ public final class GuardConfig {
           "bypass");
   private static final Map<String, String> MESSAGES =
       Map.ofEntries(
+          Map.entry("fly-denied", "§c✦ Você não pode voar nesta região."),
+          Map.entry("elytra-denied", "§c✦ Você não pode usar élitros nesta região."),
+          Map.entry("pokemon-mount-denied", "§c✦ Você não pode montar em Pokémon nesta região."),
           Map.entry("entry-blocked", "§c✦ Você não pode entrar nesta região."),
           Map.entry("raid-entry-blocked", "§c✦ Para entrar nesta arena, utilize /raid entrar."),
           Map.entry("teleport-blocked", "§c✦ Este teleporte foi bloqueado pela proteção da região."),

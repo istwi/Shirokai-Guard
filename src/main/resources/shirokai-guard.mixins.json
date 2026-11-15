@@ -43,7 +43,10 @@
     "compat.PastureRemovePacketMixin",
     "compat.PastureRemoveAllPacketMixin",
     "compat.PastureConflictPacketMixin",
-    "PhysicalMovementMixin"
+    "PhysicalMovementMixin",
+    "FlightAbilitiesMixin",
+    "ElytraFlightMixin",
+    "PokemonMountMixin"
   ],
   "injectors": {
     "defaultRequire": 1

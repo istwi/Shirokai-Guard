@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="dev.shirokai.guard.core.MobilityRulesTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-11-15T15:22:17" hostname="a5c0d56c2179" time="0.043">
+  <properties/>
+  <testcase name="groupsInheritanceAndPrioritiesApplyToAllThreeFlags()" classname="dev.shirokai.guard.core.MobilityRulesTest" time="0.009"/>
+  <testcase name="mobilityFlagsRoundTripWithExistingRules()" classname="dev.shirokai.guard.core.MobilityRulesTest" time="0.008"/>
+  <testcase name="fastCrossingCannotSkipThinRestrictedArea()" classname="dev.shirokai.guard.core.MobilityRulesTest" time="0.023"/>
+  <testcase name="exitsDimensionsAndUnconfiguredRegionsAreUnaffected()" classname="dev.shirokai.guard.core.MobilityRulesTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

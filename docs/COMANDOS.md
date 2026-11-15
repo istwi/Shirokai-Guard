@@ -1,6 +1,6 @@
 # Manual completo de comandos — Shirokai Guard
 
-Este manual corresponde ao **Guard 0.4.0-alpha.1**, para Minecraft 1.21.1 / Fabric / Java 21.
+Este manual corresponde ao **Guard 0.5.0-alpha.1**, para Minecraft 1.21.1 / Fabric / Java 21.
 A entrada por comando usa **Essentials 0.3.2-guard.1**; a integração de raids usa **Raids 0.1.20-guard.1**.
 
 ## Índice
@@ -400,6 +400,8 @@ Flags de combate não concedem automaticamente permissão para captura ou batalh
 | `entry-commands` | Guarda os comandos completos da lista local de `command-only`; use `/sg entry-command`. |
 | `enderpearl` | Recusa o uso/teleporte da Ender Pearl no hook específico. A proteção central de entrada ainda pode recusar uma pérola quando essa flag estiver liberada. |
 | `chorus-fruit` | Recusa o uso de Chorus Fruit no hook específico. A proteção central continua verificando os teleportes resultantes. |
+| `fly` | Impede voo de habilidades e entrada já voando. Preserva a capacidade/permissão fora da área; espectador é exceção. Não controla élitros nem montaria. |
+| `elytra` | Impede iniciar voo de élitros e entrar já planando. Não controla o voo de habilidades. |
 | `invincible` | **`allow`** ativa invulnerabilidade do jogador na resolução do Guard. |
 | `fall-damage` | Impede dano de queda. |
 | `hunger` | Congela o processamento de fome e sua regeneração associada. |
@@ -433,6 +435,7 @@ Um namespace não escapa de um bloqueio no nome simples. Outros aliases precisam
 
 | Flag | Efeito |
 | --- | --- |
+| `pokemon-mount` | Impede subir em Pokémon e entrar já montado. Não bloqueia barcos/cavalos comuns, Pokémon no ombro ou Pokémon voando sem jogador. |
 | `pokemon-spawn` | Recusa spawn/adição de Pokémon nos hooks da integração. |
 | `pokemon-capture` | Recusa o evento de tentativa de captura antes de a captura começar. |
 | `pokemon-battle` | Recusa a abertura de batalha pelo evento de pré-início verificado. |
@@ -537,6 +540,24 @@ Um comando de outro mod que teleporte diretamente, ou um RTP com destino calcula
 
 O token acompanha a operação específica. Ele não deixa uma janela de acesso para TPA, `/back` ou outro teleporte enquanto o warmup está pendente.
 Detalhes e testes: [entrada por comando](integrations/COMMAND_ENTRY.md) e [relatório](integrations/COMMAND_ENTRY_VALIDATION.md).
+
+### Impedir voo, élitros e montaria
+
+```mcfunction
+/sg flag loja fly deny
+/sg flag loja elytra deny
+/sg flag loja pokemon-mount deny
+```
+
+São três restrições independentes. Quem chega já nessa atividade tem a entrada recusada
+na borda. Se a restrição for ativada onde alguém já está, o servidor encerra a atividade
+com proteção temporária contra dano de queda, sem dar invulnerabilidade geral.
+O Guard mantém a permissão/capacidade de voo para fora da área. `allow` não concede
+voo a quem não tem a capacidade original. O espectador é exceção a `fly`, mas o
+criativo precisa respeitar a flag quando não estiver com bypass ativo.
+
+Detalhes, cuidados ao aplicar sobre jogadores no ar e testes:
+[voo e montaria](integrations/FLIGHT_AND_MOUNTS.md).
 
 ## Prioridades e herança
 

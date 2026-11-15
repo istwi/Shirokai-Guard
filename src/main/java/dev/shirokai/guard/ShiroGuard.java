@@ -47,6 +47,7 @@ public final class ShiroGuard implements ModInitializer {
     ServerLifecycleEvents.SERVER_STOPPING.register(
         server -> {
           EntryAccess.clear();
+          MobilityProtection.clear();
           save();
           WRITER.shutdown();
           try {
@@ -59,6 +60,7 @@ public final class ShiroGuard implements ModInitializer {
     ServerPlayConnectionEvents.DISCONNECT.register(
         (handler, server) -> {
           BYPASS.remove(handler.player.getUuid());
+          MobilityProtection.forget(handler.player.getUuid());
           EntryAccess.forget(handler.player.getUuid());
           GuardCommands.forget(handler.player.getUuid());
         });
@@ -66,6 +68,7 @@ public final class ShiroGuard implements ModInitializer {
     Protection.register();
     GuardMenus.register();
     EntrySafety.register();
+    MobilityProtection.register();
     if (COBBLEMON) dev.shirokai.guard.compat.CobblemonCompat.register();
     dev.shirokai.guard.compat.CratesCompat.initialize();
     dev.shirokai.guard.compat.FlanCompat.initialize();

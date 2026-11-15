@@ -13,10 +13,14 @@ import net.minecraft.world.Heightmap;
 public final class EntrySafety {
   public static void register() {
     ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> enforce(handler.player));
-    ServerPlayerEvents.AFTER_RESPAWN.register((oldPlayer, newPlayer, alive) -> enforce(newPlayer));
+    ServerPlayerEvents.AFTER_RESPAWN.register((oldPlayer, newPlayer, alive) -> {
+      MobilityProtection.forget(newPlayer.getUuid());
+      enforce(newPlayer);
+    });
   }
 
   public static boolean enforce(ServerPlayerEntity p) {
+    MobilityProtection.enforce(p);
     var world = p.getServerWorld();
     var origin = p.getBlockPos();
     if (ShiroGuard.allowed(world, origin, Flag.ENTRY, p) && EntryAccess.safeLogin(p, origin)) return true;
