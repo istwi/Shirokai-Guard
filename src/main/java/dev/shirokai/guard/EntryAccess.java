@@ -14,15 +14,15 @@ public final class EntryAccess {
   private static final ThreadLocal<Operation> ACTIVE = new ThreadLocal<>();
   private static final Map<UUID, Integer> NOTICES = new HashMap<>();
 
-  public static void forget(UUID player) { AUTH.forget(player); NOTICES.remove(player); }
+  public static void forget(UUID player) { AUTH.forget(player); NOTICES.remove(player); CommandEntryAccess.forget(player); }
   public static void endRaid(String scope) { AUTH.end("shirokai_raids", scope); }
-  public static void clear() { AUTH.clear(); NOTICES.clear(); ACTIVE.remove(); }
+  public static void clear() { AUTH.clear(); NOTICES.clear(); ACTIVE.remove(); CommandEntryAccess.clear(); }
 
   public static boolean safeLogin(ServerPlayerEntity player, BlockPos pos) {
     if (ShiroGuard.bypass(player)) return true;
     var rule = ShiroGuard.REGIONS.entryRule(ShiroGuard.dimension(player.getServerWorld()),
         pos.getX(), pos.getY(), pos.getZ(), player.getUuid());
-    return !rule.denied() && rule.regions().isEmpty();
+    return !rule.denied() && rule.regions().isEmpty() && rule.commandRegions().isEmpty();
   }
 
   public static boolean transition(ServerPlayerEntity player, ServerWorld target, Vec3d pos,
@@ -37,7 +37,10 @@ public final class EntryAccess {
           origin.getX(), origin.getY(), origin.getZ(), player.getUuid());
       beforeIds.addAll(previous.regions());
       beforeIds.addAll(previous.deniedRegions());
+      beforeIds.addAll(previous.commandRegions());
     }
+    var commands = new HashSet<>(rule.commandRegions());
+    commands.removeAll(beforeIds);
     var entering = new HashSet<>(rule.regions());
     entering.removeAll(beforeIds);
     // deny only affects entry; an occupant must still be able to leave or move inside.
@@ -48,6 +51,7 @@ public final class EntryAccess {
           || op.world() != target || op.destination().squaredDistanceTo(pos) > 1e-10
           || !op.regions().containsAll(entering);
     }
+    if (!commands.isEmpty()) denied |= !teleport || !CommandEntryAccess.permits(player, target, pos, commands);
     if (denied) notice(player, !entering.isEmpty() ? "raid-entry-blocked" : teleport ? "teleport-blocked" : "entry-blocked");
     return !denied;
   }

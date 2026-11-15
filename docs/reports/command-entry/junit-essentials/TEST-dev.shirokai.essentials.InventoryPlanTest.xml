@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="dev.shirokai.essentials.InventoryPlanTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-11-15T11:11:02" hostname="a5c0d56c2179" time="0.005">
+  <properties/>
+  <testcase name="rejectsFullInventoryWithoutMutatingOriginal()" classname="dev.shirokai.essentials.InventoryPlanTest" time="0.001"/>
+  <testcase name="fillsStacksAndEmptySlotsWithoutLosingComponents()" classname="dev.shirokai.essentials.InventoryPlanTest" time="0.001"/>
+  <testcase name="distinctComponentsNeverMerge()" classname="dev.shirokai.essentials.InventoryPlanTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

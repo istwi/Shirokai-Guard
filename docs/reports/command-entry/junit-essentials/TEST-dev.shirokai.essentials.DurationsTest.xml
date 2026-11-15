@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="dev.shirokai.essentials.DurationsTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-11-15T11:11:02" hostname="a5c0d56c2179" time="0.003">
+  <properties/>
+  <testcase name="acceptsExplicitUnits()" classname="dev.shirokai.essentials.DurationsTest" time="0.001"/>
+  <testcase name="rejectsNegativeZeroMissingUnitAndOverflow()" classname="dev.shirokai.essentials.DurationsTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

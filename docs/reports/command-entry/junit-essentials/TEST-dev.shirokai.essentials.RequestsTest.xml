@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="dev.shirokai.essentials.RequestsTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-11-15T11:11:03" hostname="a5c0d56c2179" time="0.018">
+  <properties/>
+  <testcase name="disconnectRemovesBothDirections()" classname="dev.shirokai.essentials.RequestsTest" time="0.01"/>
+  <testcase name="explicitSenderSelectsCorrectRequestAndClearCancelsAll()" classname="dev.shirokai.essentials.RequestsTest" time="0.0"/>
+  <testcase name="expiresAtBoundaryAndCannotBeAccepted()" classname="dev.shirokai.essentials.RequestsTest" time="0.001"/>
+  <testcase name="enforcesLimitsAndOneRequestPerSender()" classname="dev.shirokai.essentials.RequestsTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

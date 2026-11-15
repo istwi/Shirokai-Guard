@@ -10,7 +10,7 @@ repositories {
 configurations { flanArtifact }
 dependencies { flanArtifact 'maven.modrinth:flan:1.21.1-1.12.8-fabric' }
 def flanArchive = configurations.flanArtifact.singleFile
-def guardJar = file('../../build/libs/shirokai-guard-0.3.0-alpha.1.jar')
+def guardJar = file('../../build/libs/shirokai-guard-0.4.0-alpha.1.jar')
 if (!guardJar.exists()) throw new GradleException('Build the Guard JAR first: ../../gradlew build')
 dependencies {
     minecraft 'com.mojang:minecraft:1.21.1'

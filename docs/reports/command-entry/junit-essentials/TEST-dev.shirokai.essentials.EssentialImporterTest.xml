@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="dev.shirokai.essentials.EssentialImporterTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-11-15T11:11:02" hostname="a5c0d56c2179" time="0.102">
+  <properties/>
+  <testcase name="mismatchedUuidAbortsBeforeAnyWrite()" classname="dev.shirokai.essentials.EssentialImporterTest" time="0.082"/>
+  <testcase name="malformedNumericFieldsNeverSilentlyBecomeZero()" classname="dev.shirokai.essentials.EssentialImporterTest" time="0.001"/>
+  <testcase name="readsActual0352NbtAndPreservesNamespacePermissionAndSources()" classname="dev.shirokai.essentials.EssentialImporterTest" time="0.014"/>
+  <testcase name="missingSourcesFailExplicitly()" classname="dev.shirokai.essentials.EssentialImporterTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

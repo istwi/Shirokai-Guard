@@ -48,6 +48,7 @@ public enum Flag {
   ITEM_PICKUP,
   ENTRY,
   ENTRY_MODE,
+  ENTRY_COMMANDS,
   EXIT,
   TELEPORT,
   GREETING,
@@ -72,15 +73,21 @@ public enum Flag {
   }
 
   public boolean list() {
-    return this == BLOCKED_COMMANDS || this == ALLOWED_COMMANDS;
+    return this == BLOCKED_COMMANDS || this == ALLOWED_COMMANDS || this == ENTRY_COMMANDS;
   }
 
   public String validate(String value) {
     if (value == null || value.isBlank() || value.length() > 2048)
       throw new IllegalArgumentException("Valor inválido");
+    if (this == ENTRY_COMMANDS) {
+      var commands = value.split("\n", -1);
+      if (commands.length > 32) throw new IllegalArgumentException("Máximo: 32 comandos");
+      for (var command : commands) EntryCommands.normalize(command);
+      return value;
+    }
     if (this == ENTRY_MODE) {
-      if (!Set.of("normal", "deny", "authorized-only").contains(value))
-        throw new IllegalArgumentException("Use normal, deny, authorized-only ou unset");
+      if (!Set.of("normal", "deny", "authorized-only", "command-only").contains(value))
+        throw new IllegalArgumentException("Use normal, deny, authorized-only, command-only ou unset");
       return value;
     }
     if (!text() && !list() && !Set.of("allow", "deny").contains(value))

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="dev.shirokai.guard.core.RegionStoreTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-11-15T11:20:21" hostname="a5c0d56c2179" time="0.02">
+  <properties/>
+  <testcase name="unknownSchemaRejected()" classname="dev.shirokai.guard.core.RegionStoreTest" time="0.004"/>
+  <testcase name="invalidSnapshotDoesNotOverwrite()" classname="dev.shirokai.guard.core.RegionStoreTest" time="0.004"/>
+  <testcase name="malformedFilePreserved()" classname="dev.shirokai.guard.core.RegionStoreTest" time="0.002"/>
+  <testcase name="roundTripAndBackup()" classname="dev.shirokai.guard.core.RegionStoreTest" time="0.009"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -37,6 +37,24 @@ public final class GuardEntryApi {
     if (!allowed) EntryAccess.notice(p, "teleport-blocked");
     return allowed;
   }
+  public static UUID captureCommand(UUID player, String dimension, double x, double y, double z) {
+    var server = ShiroGuard.server();
+    if (server == null || !server.isOnThread() || !Double.isFinite(x+y+z)) return null;
+    var p = server.getPlayerManager().getPlayer(player); var id = Identifier.tryParse(dimension);
+    if (p == null || id == null) return null;
+    var world = server.getWorld(RegistryKey.of(RegistryKeys.WORLD,id));
+    return world == null ? null : CommandEntryAccess.capture(p,world,new Vec3d(x,y,z));
+  }
+  public static int runCommandTeleport(UUID token, UUID player, String dimension,
+      double x, double y, double z, java.util.function.IntSupplier operation) {
+    var server = ShiroGuard.server();
+    if (server == null || !server.isOnThread() || !Double.isFinite(x+y+z)) return 0;
+    var p = server.getPlayerManager().getPlayer(player); var id = Identifier.tryParse(dimension);
+    if (p == null || id == null) return 0;
+    var world = server.getWorld(RegistryKey.of(RegistryKeys.WORLD,id));
+    return world == null ? 0 : CommandEntryAccess.run(token,p,world,new Vec3d(x,y,z),operation);
+  }
+  public static void revokeCommand(UUID token) { CommandEntryAccess.revoke(token); }
   public static void invalidatePlayer(UUID player) { EntryAccess.forget(player); }
   public static void endRaid(String raid) { EntryAccess.endRaid(raid); }
 }

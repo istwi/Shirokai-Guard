@@ -1,3 +1,11 @@
+## 0.4.0-alpha.1
+
+- Novo modo `command-only` e `/sg entry-command <região> add/remove/list/clear`.
+- Correspondência exata de comando e argumentos, com lista local persistida por região.
+- API de comando independente da raid, com token de uso único para jogador/região/dimensão/destino.
+- Essentials 0.3.2-guard.1 associa a autorização à operação pendente durante warmup/carga de chunks.
+- Testes de dispatch/aliases, argumentos, warmup real, TPA e preservação da API Raids.
+
 ## 0.3.0-alpha.1
 
 - Adiciona `entry-mode` por região/grupo com valores `normal`, `deny` e `authorized-only`, prioridades e herança.

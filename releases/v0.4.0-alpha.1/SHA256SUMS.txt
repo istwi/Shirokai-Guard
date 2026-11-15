@@ -1,0 +1,2 @@
+e9ff42da737d17595e016fabbd726d8f69489f28930c10ce75bcd5a11ab916eb  shirokai-command-entry-0.4.0-alpha.1.zip
+9361cdc6d0bb1fd9caf4a02d94bdc83bd6e554b76fc8c9f07d2dbacdb5cdc06a  shirokai-guard-0.4.0-alpha.1.jar

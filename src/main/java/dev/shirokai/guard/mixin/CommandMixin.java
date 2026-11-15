@@ -11,6 +11,12 @@ import org.spongepowered.asm.mixin.injection.callback.*;
 
 @Mixin(CommandManager.class)
 public abstract class CommandMixin {
+  @com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod(method = "execute")
+  private void guard$context(ParseResults<ServerCommandSource> parsed, String command,
+      com.llamalad7.mixinextras.injector.wrapoperation.Operation<Void> original) {
+    CommandEntryAccess.execute(parsed.getContext().getSource(), command, () -> original.call(parsed,command));
+  }
+
   @Inject(method = "execute", at = @At("HEAD"), cancellable = true)
   private void guard$command(
       ParseResults<ServerCommandSource> parsed, String command, CallbackInfo ci) {

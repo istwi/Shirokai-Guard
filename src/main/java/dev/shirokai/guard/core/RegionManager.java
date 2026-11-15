@@ -192,13 +192,14 @@ public final class RegionManager {
 
   /** Highest defined priority wins; deny > authorized-only > normal at equal priority.
    * Inherited flags bind to the destination child region, never a global permission. */
-  public record EntryRule(boolean denied, Set<String> regions, Set<String> deniedRegions) {}
+  public record EntryRule(boolean denied, Set<String> regions, Set<String> deniedRegions, Set<String> commandRegions) {}
 
   public EntryRule entryRule(String dim, int x, int y, int z, UUID actor) {
     Integer priority = null;
     boolean denied = false;
     var required = new HashSet<String>();
     var deniedRegions = new HashSet<String>();
+    var commandRegions = new HashSet<String>();
     for (var r : at(dim, x, y, z)) {
       if (priority != null && r.priority() < priority) break;
       var value = inherited(r, Flag.ENTRY_MODE, actor);
@@ -206,9 +207,10 @@ public final class RegionManager {
       priority = r.priority();
       denied |= value.equals("deny");
       if (value.equals("deny")) deniedRegions.add(r.id());
+      if (value.equals("command-only")) commandRegions.add(r.id());
       if (value.equals("authorized-only")) required.add(r.id());
     }
-    return new EntryRule(denied, Set.copyOf(required), Set.copyOf(deniedRegions));
+    return new EntryRule(denied, Set.copyOf(required), Set.copyOf(deniedRegions), Set.copyOf(commandRegions));
   }
 
   public boolean allowed(String dim, int x, int y, int z, Flag flag, UUID actor) {
@@ -274,8 +276,9 @@ public final class RegionManager {
               (int)Math.floor(y+(b-y)*t0), (int)Math.floor(z+(c-z)*t0), actor);
           var newRule = entryRule(dimension, (int)Math.floor(x+(a-x)*t1),
               (int)Math.floor(y+(b-y)*t1), (int)Math.floor(z+(c-z)*t1), actor);
-          var occupied = new HashSet<>(oldRule.regions()); occupied.addAll(oldRule.deniedRegions());
-          if (newRule.regions().stream().anyMatch(id -> !occupied.contains(id))
+          var occupied = new HashSet<>(oldRule.regions()); occupied.addAll(oldRule.deniedRegions()); occupied.addAll(oldRule.commandRegions());
+          if (newRule.commandRegions().stream().anyMatch(id -> !occupied.contains(id))
+              || newRule.regions().stream().anyMatch(id -> !occupied.contains(id))
               || newRule.deniedRegions().stream().anyMatch(id -> !occupied.contains(id))) return false;
         }
         if (!allowed(dimension, px, py, pz, edge == 0 ? Flag.ENTRY : Flag.EXIT, actor))

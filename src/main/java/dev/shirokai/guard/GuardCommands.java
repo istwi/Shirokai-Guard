@@ -59,7 +59,7 @@ public final class GuardCommands {
       case "define", "redefine", "wand", "pos1", "pos2", "sel", "expand", "contract", "select" ->
           "region.create";
       case "remove" -> "region.delete";
-      case "template", "flag", "flags" -> "region.flag";
+      case "template", "flag", "flags", "entry-command" -> "region.flag";
       case "addowner", "removeowner", "addmember", "removemember" -> "region.member";
       case "visualize", "info", "list", "help" -> "region.info";
       case "bypass" -> "bypass";
@@ -98,6 +98,7 @@ public final class GuardCommands {
                   "removemember",
                   "flag",
                   "flags",
+                  "entry-command",
                   "reload",
                   "save",
                   "status",
@@ -155,6 +156,25 @@ public final class GuardCommands {
       boolean changed = false;
       String result = GuardConfig.message("completed");
       switch (command) {
+        case "entry-command" -> {
+          need(a, 2);
+          var region = ShiroGuard.REGIONS.get(dim, a[0]);
+          var commands = new TreeSet<>(EntryCommands.list(region));
+          switch (a[1]) {
+            case "list" -> { if (a.length != 2) throw new IllegalArgumentException("Use <região> list"); }
+            case "clear" -> { if (a.length != 2) throw new IllegalArgumentException("Use <região> clear"); commands.clear(); changed = true; }
+            case "add", "remove" -> {
+              need(a, 3);
+              String entry = EntryCommands.normalize(input.strip().split("\\s+", 3)[2]);
+              if (a[1].equals("add")) commands.add(entry); else commands.remove(entry);
+              changed = true;
+            }
+            default -> throw new IllegalArgumentException("Use entry-command <região> add/remove/list/clear [comando completo]");
+          }
+          if (changed) ShiroGuard.REGIONS.put(region.withFlag(Flag.ENTRY_COMMANDS, Region.Group.ALL,
+              commands.isEmpty() ? "unset" : String.join("\n", commands)));
+          result = "Comandos de entrada de " + region.id() + ": " + commands;
+        }
         case "menu" -> {
           GuardMenus.home(s.getPlayerOrThrow());
         }
@@ -207,9 +227,9 @@ public final class GuardCommands {
                     + " contract <n> <direção>, define <id>|__global__,"
                     + " redefine/remove/info/select/flags <id>, list, setpriority <id> <n>,"
                     + " setparent <id> <pai|none>, addowner/removeowner/addmember/removemember <id>"
-                    + " <nome online|UUID>, flag <id> <flag> <allow|deny|normal|authorized-only|unset|texto|lista>"
+                    + " <nome online|UUID>, flag <id> <flag> <allow|deny|normal|authorized-only|command-only|unset|texto|lista>"
                     + " [@all|@owners|@members|@nonmembers], menu, template, visualize"
-                    + " <região|off>, cancel, save, reload, status, debug, bypass";
+                    + " <região|off>, entry-command <região> add/remove/list/clear [comando completo], cancel, save, reload, status, debug, bypass";
         case "wand" -> {
           p = s.getPlayerOrThrow();
           WANDS.add(p.getUuid());
