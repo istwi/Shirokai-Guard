@@ -1,3 +1,10 @@
+## 0.5.1-alpha.1
+
+- Corrige avisos indevidos de entrada bloqueada após login, `/spawn` e outros teleportes permitidos.
+- Pacotes de jogador/veículo que aguardam confirmação nativa não são tratados como tentativas de entrada.
+- Preserva o descarte e os IDs nativos de confirmação, sem bypass de regiões ou alteração de permissões.
+- Regressões reproduzidas antes da correção e verificadas com handlers/pacotes reais.
+
 ## 0.5.0-alpha.1
 
 - Flags independentes `fly`, `elytra` e `pokemon-mount`, com grupos, herança e prioridades.

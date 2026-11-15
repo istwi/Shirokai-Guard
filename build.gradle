@@ -1,5 +1,5 @@
 plugins { id 'fabric-loom' version '1.9.2'; id 'org.jetbrains.kotlin.jvm' version '2.2.20' }
-version = '0.5.0-alpha.1'
+version = '0.5.1-alpha.1'
 group = 'dev.shirokaiguard'
 base { archivesName = 'shirokai-guard' }
 repositories { mavenCentral(); maven { url = 'https://maven.impactdev.net/repository/development'; content { includeGroup 'com.cobblemon' } } }
@@ -58,9 +58,10 @@ processGametestResources {
     inputs.property 'withArenaIntegrations', providers.gradleProperty('withArenaIntegrations').isPresent()
     inputs.property 'loadTest', providers.gradleProperty('loadTest').isPresent()
     inputs.property 'visualTest', providers.gradleProperty('visualTest').isPresent()
-    def tests = providers.gradleProperty('visualTest').isPresent() ? ['VisualServerGameTests'] : providers.gradleProperty('loadTest').isPresent() ? ['LoadGameTests'] : ['GuardGameTests', 'PhaseThreeGameTests', 'EntryModeGameTests', 'CommandEntryGameTests', 'MobilityGameTests']
+    def tests = providers.gradleProperty('visualTest').isPresent() ? ['VisualServerGameTests'] : providers.gradleProperty('loadTest').isPresent() ? ['LoadGameTests'] : ['GuardGameTests', 'PhaseThreeGameTests', 'EntryModeGameTests', 'CommandEntryGameTests', 'MobilityGameTests', 'TeleportSyncGameTests']
     if (providers.gradleProperty('withArenaIntegrations').isPresent()) tests.addAll(['ArenaIntegrationGameTests', 'CommandIntegrationGameTests'])
     if (providers.gradleProperty('withCobblemon').isPresent() && !providers.gradleProperty('loadTest').isPresent() && !providers.gradleProperty('visualTest').isPresent()) tests.addAll(['CobblemonGameTests', 'PokemonMountGameTests'])
+    if (providers.gradleProperty('teleportSyncTest').isPresent()) tests = ['TeleportSyncGameTests']
     inputs.property 'testEntrypoints', tests.join(',')
     filesMatching('fabric.mod.json') { expand testEntrypoints: tests.collect { '"dev.shirokai.guard.' + it + '"' }.join(',') }
 }

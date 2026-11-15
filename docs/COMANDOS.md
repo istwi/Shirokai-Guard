@@ -1,6 +1,6 @@
 # Manual completo de comandos — Shirokai Guard
 
-Este manual corresponde ao **Guard 0.5.0-alpha.1**, para Minecraft 1.21.1 / Fabric / Java 21.
+Este manual corresponde ao **Guard 0.5.1-alpha.1**, para Minecraft 1.21.1 / Fabric / Java 21.
 A entrada por comando usa **Essentials 0.3.2-guard.1**; a integração de raids usa **Raids 0.1.20-guard.1**.
 
 ## Índice
@@ -815,6 +815,7 @@ Se não funcionar, confira flags mais específicas (`block-break`/`block-place`)
 
 | Sintoma | O que conferir |
 | --- | --- |
+| Aviso de entrada no login ou após `/spawn`, mas acesso funciona | Atualize para Guard 0.5.1-alpha.1; [correção de sincronização](integrations/TELEPORT_SYNC.md). Não remova a região para silenciar o texto. |
 | “Região inexistente nesta dimensão” | ID e dimensão atual; use `/sg list`. |
 | “Seleção ausente” ou “Defina pos1 e pos2” | Faça os dois cantos na dimensão correta, ou use `/sg select <região>`. |
 | Expandiu, mas a região não mudou | Expansão muda a seleção; finalize com `/sg redefine <região>`. |

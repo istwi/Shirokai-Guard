@@ -12,6 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.*;
 @Mixin(ServerPlayNetworkHandler.class)
 public abstract class MovementMixin {
   @Shadow public ServerPlayerEntity player;
+  @Shadow private Vec3d requestedTeleportPos;
 
   @Inject(
       method = "onPlayerMove",
@@ -22,6 +23,9 @@ public abstract class MovementMixin {
                   "Lnet/minecraft/server/network/ServerPlayNetworkHandler;handlePendingTeleport()Z"),
       cancellable = true)
   private void guard$move(PlayerMoveC2SPacket packet, CallbackInfo ci) {
+    // Vanilla discards movement until teleport confirmation. Do not treat the old
+    // client position as an attempted region entry; keep vanilla's pending handling.
+    if (requestedTeleportPos != null) return;
     var dest =
         new Vec3d(
             packet.getX(player.getX()), packet.getY(player.getY()), packet.getZ(player.getZ()));
@@ -42,6 +46,7 @@ public abstract class MovementMixin {
                   "Lnet/minecraft/server/network/ServerPlayNetworkHandler;handlePendingTeleport()Z"),
       cancellable = true)
   private void guard$vehicle(VehicleMoveC2SPacket packet, CallbackInfo ci) {
+    if (requestedTeleportPos != null) return;
     var vehicle = player.getRootVehicle();
     if (vehicle == player) return;
     var dest =

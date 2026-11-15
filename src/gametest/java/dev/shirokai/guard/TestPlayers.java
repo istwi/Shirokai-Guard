@@ -12,7 +12,9 @@ import net.minecraft.world.GameMode;
 
 /** Real game-mode behavior, unlike the vanilla mock which always reports creative. */
 final class TestPlayers {
-  static ServerPlayerEntity create(TestContext ctx) {
+  static ServerPlayerEntity create(TestContext ctx) { return create(ctx,null); }
+
+  static ServerPlayerEntity create(TestContext ctx, java.util.function.Consumer<net.minecraft.text.Text> observer) {
     var profile =
         new GameProfile(
             UUID.randomUUID(), "sg-test-" + UUID.randomUUID().toString().substring(0, 6));
@@ -36,8 +38,14 @@ final class TestPlayers {
     }
     var data = ConnectedClientData.createDefault(profile, false);
     var player =
-        new ServerPlayerEntity(
-            ctx.getWorld().getServer(), ctx.getWorld(), profile, data.syncedOptions());
+        observer == null ? new ServerPlayerEntity(
+            ctx.getWorld().getServer(), ctx.getWorld(), profile, data.syncedOptions())
+        : new ServerPlayerEntity(ctx.getWorld().getServer(),ctx.getWorld(),profile,data.syncedOptions()) {
+          @Override public void sendMessage(net.minecraft.text.Text text,boolean overlay) {
+            observer.accept(text);
+            super.sendMessage(text,overlay);
+          }
+        };
     var connection = new ClientConnection(NetworkSide.SERVERBOUND);
     new EmbeddedChannel(connection);
     ctx.getWorld().getServer().getPlayerManager().onPlayerConnect(connection, player, data);
