@@ -27,6 +27,10 @@ concede acesso de uso único; sair e tentar `/back` não concede uma nova entrad
 Regiões comuns continuam funcionando como antes. Valores: `normal`, `deny`,
 `authorized-only`, `unset`. [Instalação das integrações, precedência e limites](docs/integrations/ARENA_ACCESS.md).
 
+## Manual de comandos
+
+[Guia completo em português: todos os comandos, flags, permissões e exemplos](docs/COMANDOS.md).
+
 ## Instalação
 
 1. Use Java 21, Fabric Loader **0.17.2+** e Fabric API **0.116.18+1.21.1**.
