@@ -1,3 +1,11 @@
+## 0.5.2-alpha.1
+
+- `/sg bypass` autorizado funciona mesmo com todos os comandos bloqueados na região.
+- OP nível 4 pode ativar o bypass, inclusive com negação explícita do nó de permissão.
+- Flan 1.21.1-1.12.8: bloqueia criação e redimensionamento de claims de jogadores que sobreponham qualquer região Guard na mesma dimensão.
+- Confere o volume normalizado pelo próprio Flan antes de alterar claims e contabilizar blocos.
+- A enxada de ouro continua disponível; claims existentes não são removidos.
+
 ## 0.5.1-alpha.1
 
 - Corrige avisos indevidos de entrada bloqueada após login, `/spawn` e outros teleportes permitidos.

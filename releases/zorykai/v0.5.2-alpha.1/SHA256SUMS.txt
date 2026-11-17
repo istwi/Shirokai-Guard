@@ -1,0 +1,1 @@
+6067f2407664bf7d41169c2d6a2689db6a343ce102b6f383efde052782fd97dd  shirokai-guard-0.5.2-alpha.1-zorykai-visual.jar

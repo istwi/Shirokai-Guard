@@ -1,0 +1,9 @@
+{
+  "tests_passed": 10,
+  "failures": 0,
+  "runtime_default_menu": "✦ ZORYKAI GUARD",
+  "runtime_default_error": "Zorykai Guard: %s",
+  "technical_config_directory": "config/shirokai-guard",
+  "ignored_original_build_jar_restored": true,
+  "tested_jar_sha256": "6067f2407664bf7d41169c2d6a2689db6a343ce102b6f383efde052782fd97dd"
+}

@@ -76,6 +76,8 @@ public final class ShiroGuard implements ModInitializer {
   }
 
   public static boolean permission(ServerCommandSource source, String node) {
+    if (node.equals("bypass") && source.getPlayer() != null
+        && source.getPlayer().getCommandSource().hasPermissionLevel(4)) return true;
     int fallback = GuardConfig.fallback(node);
     return fallback < 0
         ? Permissions.check(source, "shirokaiguard." + node, false)

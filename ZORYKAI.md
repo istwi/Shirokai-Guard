@@ -1,19 +1,13 @@
-# Zorykai Guard — variante visual
+# Zorykai Guard
 
-[Baixar o JAR 0.5.1-alpha.1](releases/zorykai/v0.5.1-alpha.1/shirokai-guard-0.5.1-alpha.1-zorykai-visual.jar) · [Checksum](releases/zorykai/v0.5.1-alpha.1/SHA256SUMS.txt)
+[Baixar o JAR 0.5.2-alpha.1](releases/zorykai/v0.5.2-alpha.1/shirokai-guard-0.5.2-alpha.1-zorykai-visual.jar) · [Checksum](releases/zorykai/v0.5.2-alpha.1/SHA256SUMS.txt)
 
-Esta branch distribui uma variante **somente visual** do JAR original: nome do mod,
-título padrão do menu, prefixo de erro e cabeçalho de ajuda usam Zorykai/ZORYKAI.
-Os fontes, métodos, IDs, namespaces, comandos, permissões, pacotes e classes mantêm
-os nomes originais. As instruções dos métodos não foram modificadas.
+Esta atualização acrescenta recuperação por `/sg bypass`, autorização adicional para OP nível 4 e proteção contra criação/redimensionamento de claims Flan sobre regiões Guard. Consulte [todos os comandos](docs/COMANDOS.md) e o [changelog](CHANGELOG.md).
 
-Substitua o JAR antigo por este; não mantenha os dois instalados. Configurações
-externas já existentes em `config/shirokai-guard/menus.json` e `messages.json` não
-são sobrescritas e podem continuar exibindo nomes personalizados/antigos.
+O JAR usa Zorykai/ZORYKAI nos quatro textos visuais da variante anterior. IDs, namespaces, comandos, permissões, pacotes, classes e caminhos de configuração continuam iguais. As mudanças funcionais estão nos fontes desta branch; a aplicação posterior da marca visual altera apenas constantes de texto e o nome visual em `fabric.mod.json`.
 
-O JAR modificado passou nos oito GameTests com Flan real. Consulte o
-[relatório e detalhes](releases/zorykai/v0.5.1-alpha.1/LEIA-ME.md) e a
-[auditoria binária](releases/zorykai/v0.5.1-alpha.1/audit.json).
+Substitua o JAR antigo pelo novo; não mantenha os dois instalados. Configurações existentes em `config/shirokai-guard/menus.json` e `messages.json` são preservadas e podem continuar exibindo nomes personalizados/antigos. Reinicie o servidor.
 
-Os fontes continuam intocados: recompilar o projeto normalmente produz a variante
-original Shirokai. O JAR visual pronto está no link acima. A branch `main` não foi alterada.
+Recompilar os fontes produz a marca visual original Shirokai. O JAR Zorykai pronto está no link acima. A branch `main` permanece na versão anterior.
+
+A versão visual anterior permanece em [0.5.1-alpha.1](releases/zorykai/v0.5.1-alpha.1/LEIA-ME.md).

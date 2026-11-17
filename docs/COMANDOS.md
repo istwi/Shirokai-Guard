@@ -727,7 +727,9 @@ Alterna seu bypass de sessão do Guard:
 Leia a resposta e confirme se ficou `true` (ativo) ou `false` (inativo).
 Não há argumento `on`/`off` específico: o comando alterna o estado.
 
-Só funciona enquanto a permissão `shirokaiguard.bypass` continuar válida. A permissão sozinha não ativa o bypass.
+Pode ser ativado com a permissão `shirokaiguard.bypass` ou sendo OP nível 4. A autorização sozinha não ativa o bypass.
+O comando exato `/sg bypass` passa pelas listas `blocked-commands` e `allowed-commands`, permitindo sair de uma região que bloqueia todos os comandos. A exceção não libera outros comandos `/sg`.
+O bypass de sessão só continua válido enquanto a autorização continuar válida.
 É desativado na desconexão e não ignora proteções independentes do Flan ou de outros mods.
 **Para testar uma loja/arena como administrador, deixe o bypass em `false`.**
 
@@ -831,3 +833,12 @@ Se não funcionar, confira flags mais específicas (`block-break`/`block-place`)
 | Comando de outro mod não entra com `command-only` | Cadastrar o texto não cria integração; use o fluxo compatível do Essentials ou implemente adaptador da API. |
 
 Referências: [README](../README.md), [arquitetura](ARCHITECTURE.md), [integrações](INTEGRATIONS.md), [acesso a arenas](integrations/ARENA_ACCESS.md) e [entrada por comando exato](integrations/COMMAND_ENTRY.md).
+
+
+### Claims do Flan em regiões Guard
+
+Com Flan 1.21.1-1.12.8-fabric instalado, criar ou redimensionar um claim de jogador é negado quando o volume final sobrepõe qualquer região Guard na mesma dimensão. Não é necessário configurar uma flag. Uma seleção iniciada fora também é conferida; um `__global__` impede claims em toda a dimensão.
+
+A enxada de ouro não é proibida. Fora das regiões, o Flan continua aplicando suas próprias regras. Claims existentes não são apagados; esta integração protege as operações `createClaim` e `resizeClaim` de jogadores, sem alterar carregamento de claims, criação administrativa por API ou subclaims de claims antigos.
+
+Administradores podem ativar `/sg bypass` para permitir essas operações no Guard; as regras independentes do Flan continuam valendo. A integração opcional não exige instalar Flan para iniciar o servidor.

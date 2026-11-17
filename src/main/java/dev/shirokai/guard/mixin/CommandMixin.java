@@ -22,7 +22,7 @@ public abstract class CommandMixin {
       ParseResults<ServerCommandSource> parsed, String command, CallbackInfo ci) {
     var s = parsed.getContext().getSource();
     var p = s.getPlayer();
-    if (p == null || ShiroGuard.bypass(p)) return;
+    if (p == null || ShiroGuard.bypass(p) || GuardCommands.isBypassRecovery(parsed, command)) return;
     var pos = p.getBlockPos();
     if (!ShiroGuard.REGIONS.commandAllowed(
         ShiroGuard.dimension(p.getWorld()),

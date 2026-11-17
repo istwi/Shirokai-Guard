@@ -13,6 +13,20 @@ import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 
 public final class GuardCommands {
+  private static final com.mojang.brigadier.Command<ServerCommandSource> BYPASS_COMMAND =
+      ctx -> run(ctx.getSource(), "bypass", "");
+
+  public static boolean isBypassRecovery(
+      com.mojang.brigadier.ParseResults<ServerCommandSource> parsed, String command) {
+    try {
+      return parsed.getContext().getCommand() == BYPASS_COMMAND
+          && EntryCommands.normalize(command).equals("sg bypass")
+          && ShiroGuard.permission(parsed.getContext().getSource(), "bypass");
+    } catch (IllegalArgumentException e) {
+      return false;
+    }
+  }
+
   public record Selection(String dimension, BlockPos first, BlockPos second) {
     public Bounds bounds() {
       if (first == null || second == null) throw new IllegalArgumentException("Defina pos1 e pos2");
@@ -108,7 +122,7 @@ public final class GuardCommands {
             root.then(
                 literal(command)
                     .requires(s -> ShiroGuard.permission(s, node(command)))
-                    .executes(ctx -> run(ctx.getSource(), command, ""))
+                    .executes(command.equals("bypass") ? BYPASS_COMMAND : ctx -> run(ctx.getSource(), command, ""))
                     .then(
                         argument("args", StringArgumentType.greedyString())
                             .executes(

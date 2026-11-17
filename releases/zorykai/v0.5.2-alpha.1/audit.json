@@ -1,0 +1,47 @@
+{
+  "repository": "istwi/Shirokai-Guard",
+  "branch": "zorykai",
+  "base_commit": "155cc7e7fe07e3897ccbfc84b6d0892c734aa6c7",
+  "remote_branches": [
+    "main",
+    "zorykai"
+  ],
+  "version": "0.5.2-alpha.1",
+  "original_sha256": "203797384cd44284bc71de0bda3256a01c4dfa0d993ba8ca08c2b169cd677132",
+  "patched_sha256": "6067f2407664bf7d41169c2d6a2689db6a343ce102b6f383efde052782fd97dd",
+  "changes": [
+    {
+      "entry": "dev/shirokai/guard/GuardCommands.class",
+      "constant": 551,
+      "old": "Shirokai Guard alpha — /sg wand, pos1, pos2, sel clear, expand <n> <direção>|vert, contract <n> <direção>, define <id>|__global__, redefine/remove/info/select/flags <id>, list, setpriority <id> <n>, setparent <id> <pai|none>, addowner/removeowner/addmember/removemember <id> <nome online|UUID>, flag <id> <flag> <allow|deny|normal|authorized-only|command-only|unset|texto|lista> [@all|@owners|@members|@nonmembers], menu, template, visualize <região|off>, entry-command <região> add/remove/list/clear [comando completo], cancel, save, reload, status, debug, bypass",
+      "new": "Zorykai Guard alpha — /sg wand, pos1, pos2, sel clear, expand <n> <direção>|vert, contract <n> <direção>, define <id>|__global__, redefine/remove/info/select/flags <id>, list, setpriority <id> <n>, setparent <id> <pai|none>, addowner/removeowner/addmember/removemember <id> <nome online|UUID>, flag <id> <flag> <allow|deny|normal|authorized-only|command-only|unset|texto|lista> [@all|@owners|@members|@nonmembers], menu, template, visualize <região|off>, entry-command <região> add/remove/list/clear [comando completo], cancel, save, reload, status, debug, bypass"
+    },
+    {
+      "entry": "dev/shirokai/guard/GuardConfig.class",
+      "constant": 571,
+      "old": "Shirokai Guard: %s",
+      "new": "Zorykai Guard: %s"
+    },
+    {
+      "entry": "dev/shirokai/guard/GuardConfig.class",
+      "constant": 638,
+      "old": "✦ SHIROKAI GUARD",
+      "new": "✦ ZORYKAI GUARD"
+    },
+    {
+      "entry": "fabric.mod.json",
+      "field": "name",
+      "old": "Shirokai Guard",
+      "new": "Zorykai Guard"
+    }
+  ],
+  "entries_total": 110,
+  "entries_modified": [
+    "dev/shirokai/guard/GuardCommands.class",
+    "dev/shirokai/guard/GuardConfig.class",
+    "fabric.mod.json"
+  ],
+  "entries_byte_identical": 107,
+  "all_method_and_class_bodies_byte_identical": true,
+  "source_files_modified_for_visual_patch": false
+}

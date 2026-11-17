@@ -13,6 +13,7 @@ public final class OptionalMixinPlugin implements IMixinConfigPlugin {
   }
 
   public boolean shouldApplyMixin(String target, String mixin) {
+    if (mixin.contains(".flan.")) return FabricLoader.getInstance().isModLoaded("flan");
     return !mixin.contains(".compat.") || FabricLoader.getInstance().isModLoaded("cobblemon");
   }
 
