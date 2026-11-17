@@ -11,3 +11,9 @@ Substitua o JAR antigo pelo novo; não mantenha os dois instalados. Configuraç�
 Recompilar os fontes produz a marca visual original Shirokai. O JAR Zorykai pronto está no link acima. A branch `main` permanece na versão anterior.
 
 A versão visual anterior permanece em [0.5.1-alpha.1](releases/zorykai/v0.5.1-alpha.1/LEIA-ME.md).
+
+## Flan Zorykai com comandos básicos
+
+[Baixar Flan-Zorykai-basico.jar](releases/zorykai/flan-basico/Flan-Zorykai-basico.jar) · [Instalação e comandos](releases/zorykai/flan-basico/LEIA-ME.md) · [Checksum](releases/zorykai/flan-basico/SHA256SUMS.txt)
+
+Variante do Flan enviado pelo usuário: mantém os comandos de gerenciamento de terrenos e amigos para jogadores e reserva os extras para OP conforme `permissionLevel`. Inclui auditoria, ferramenta de alteração e relatório dos 12 testes aprovados com Flan e Guard.

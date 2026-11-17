@@ -1,0 +1,29 @@
+{
+  "original_sha256": "6aaa36de9ef250e7faaf88352034ba022ba60dbf6af6dee7d7e033b4f9fdff75",
+  "patched_sha256": "85f212efe59b65ab30b6a65497335f8567ab0435384a3808b0a31475f695130d",
+  "changed_entries": [
+    "io/github/flemmli97/flan/commands/CommandClaim.class",
+    "io/github/flemmli97/flan/commands/sub/AddClaimCommand.class",
+    "io/github/flemmli97/flan/commands/sub/AdminModeCommand.class",
+    "io/github/flemmli97/flan/commands/sub/AllowListCommand.class",
+    "io/github/flemmli97/flan/commands/sub/BlockPurchaseCommand.class",
+    "io/github/flemmli97/flan/commands/sub/ClaimBlocksCommand.class",
+    "io/github/flemmli97/flan/commands/sub/ClaimHomeCommand.class",
+    "io/github/flemmli97/flan/commands/sub/ClaimMessageCommand.class",
+    "io/github/flemmli97/flan/commands/sub/DeleteClaimCommand.class",
+    "io/github/flemmli97/flan/commands/sub/FakePlayerCommand.class",
+    "io/github/flemmli97/flan/commands/sub/GriefPreventionCommand.class",
+    "io/github/flemmli97/flan/commands/sub/ListClaimCommand.class",
+    "io/github/flemmli97/flan/commands/sub/ReloadCommand.class",
+    "io/github/flemmli97/flan/commands/sub/SetAdminClaimCommand.class",
+    "io/github/flemmli97/flan/commands/sub/TeleportCommand.class",
+    "io/github/flemmli97/flan/commands/sub/TransferClaimCommand.class",
+    "io/github/flemmli97/flan/commands/sub/TrappedCommand.class",
+    "io/github/flemmli97/flan/commands/sub/UnlockDropsCommand.class"
+  ],
+  "unchanged_entries": 357,
+  "cooldown_unchanged": true,
+  "claim_storage_unchanged": true,
+  "assets_and_visuals_unchanged": true,
+  "gametests_passed": 12
+}
